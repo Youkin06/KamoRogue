@@ -1,0 +1,5 @@
+# .gitignoreの中身
+__pycache__/
+*.pyc
+.DS_Store
+.venv
