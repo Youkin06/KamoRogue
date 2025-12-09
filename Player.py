@@ -13,7 +13,11 @@ class Player:
         self.speed = 1
         self.size = 4
         self.color = 8
+
+        #ジャンプjump
         self.gravity = 1
+        self.jumpMaxCount = 2
+        self.jumpCount = 0
         self.jump_strength = -8
         self.is_grounded = False
         
@@ -71,9 +75,10 @@ class Player:
             self.x += self.speed
             self.facingLeft = False
             
-        if pyxel.btnp(pyxel.KEY_W) and self.is_grounded:
+        if pyxel.btnp(pyxel.KEY_W) and self.is_grounded and self.jumpCount < self.jumpMaxCount:
             self.vy = self.jump_strength
-            self.is_grounded = False
+            #self.is_grounded = False
+            self.jumpCount += 1
             
         self.vy += self.gravity
         self.y += self.vy
@@ -83,6 +88,7 @@ class Player:
             self.y = 80
             self.vy = 0
             self.is_grounded = True
+            self.jumpCount = 0
 
     def attack(self):
         new_bullets = []
