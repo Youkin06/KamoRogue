@@ -20,7 +20,7 @@ class Player:
         # ダッシュdash
         self.last_key = None
         self.key_timer = 0
-        self.dash_distance = 15
+        self.dash_distance = 20
         self.facingLeft = False
         
         #攻撃attack

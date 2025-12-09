@@ -6,18 +6,19 @@ class App:
     def __init__(self):
         pyxel.init(160, 120, fps=30)
         pyxel.load("my_resource.pyxres")
-        self.player = Player.Player()
-        self.enemy = Enemy1.Enemy1(50, 50)
+        self.player = Player.Player()   
+        self.enemy1 = Enemy1.Enemy1(50, 100)
         pyxel.run(self.update, self.draw)
 
     def update(self):
         self.player.update()
-        self.enemy.update()
+        self.enemy1.update()
+        
         
 
     def draw(self):
         pyxel.cls(0)
         self.player.draw()
-        self.enemy.draw()
+        self.enemy1.draw()
 
 App()
