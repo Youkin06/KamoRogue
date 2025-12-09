@@ -1,5 +1,6 @@
 import pyxel
 import Bullet
+import Zanzou
 
 
 class Player:
@@ -21,10 +22,14 @@ class Player:
         self.key_timer = 0
         self.dash_distance = 15
         self.facingLeft = False
-        self.bullets = []
-
+        
         #攻撃attack
+        self.bullets = []
         self.Bullet = Bullet.Bullet
+        
+        #残像Zanzou 
+        self.zanzou = []
+        self.Zanzou = Zanzou.Zanzou
 
         #画像image
         pyxel.load("my_resource.pyxres")
@@ -32,6 +37,7 @@ class Player:
     def update(self):
         self.move()
         self.attack()
+        self.update_zanzou()
         
 
     def move(self):
@@ -40,6 +46,8 @@ class Player:
         # Dash Left
         if pyxel.btnp(pyxel.KEY_A):
             if self.last_key == pyxel.KEY_A and self.key_timer < 10:
+                self.zanzou.append(self.Zanzou(self.x, self.y, 32, 0, True, 5))
+                self.zanzou.append(self.Zanzou(self.x - self.dash_distance // 2.5, self.y, 48, 0, True, 10))
                 self.x -= self.dash_distance
             
             self.last_key = pyxel.KEY_A
@@ -48,6 +56,8 @@ class Player:
         # Dash Right
         if pyxel.btnp(pyxel.KEY_D):
             if self.last_key == pyxel.KEY_D and self.key_timer < 10:
+                self.zanzou.append(self.Zanzou(self.x, self.y, 32, 0, False, 5))
+                self.zanzou.append(self.Zanzou(self.x + self.dash_distance // 1.5, self.y, 48, 0, False, 10))
                 self.x += self.dash_distance
 
             self.last_key = pyxel.KEY_D
@@ -84,14 +94,26 @@ class Player:
         if pyxel.btnp(pyxel.KEY_J):
             self.bullets.append(self.Bullet(self.x, self.y, self.facingLeft))
 
+    def update_zanzou(self):
+        new_zanzou = []
+        for g in self.zanzou:
+            if g.update():
+                new_zanzou.append(g)
+        self.zanzou = new_zanzou
+
     def draw(self):
+        self.zanzouDraw()
         self.bulletDraw()
         self.playerDraw() #一番下にすることで、一番手前に表示
-            
+        
 
     def bulletDraw(self):
         for i in self.bullets:
             i.draw()
+
+    def zanzouDraw(self):
+        for g in self.zanzou:
+            g.draw()
 
     def playerDraw(self):
         u = (pyxel.frame_count // 6 % 2) * 16
