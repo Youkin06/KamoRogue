@@ -1,12 +1,16 @@
 import pyxel
 import Bullet
 import Zanzou
+import PlayerUI
 
 
 class Player:
     def __init__(self):
         #HP
         self.hp = 3
+        self.max_hp = 3
+        self.ui = PlayerUI.PlayerUI(self)
+        
         #移動move
         self.x = 80
         self.y = 0
@@ -50,6 +54,7 @@ class Player:
         self.attack()
         self.guard()
         self.update_zanzou()
+        self.ui.update()
         
 
     def move(self):
@@ -132,6 +137,7 @@ class Player:
         self.bulletDraw()
         self.guardDraw()
         self.playerDraw() #一番下にすることで、一番手前に表示
+        self.ui.draw()
         
 
     def bulletDraw(self):
