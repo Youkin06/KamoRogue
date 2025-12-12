@@ -9,7 +9,7 @@ class Player:
         #HP
         self.hp = 3
         self.max_hp = 3
-        self.ui = PlayerUI.PlayerUI(self)
+        self.UI = PlayerUI.PlayerUI(self)
         
         #移動move
         self.x = 80
@@ -54,7 +54,7 @@ class Player:
         self.attack()
         self.guard()
         self.update_zanzou()
-        self.ui.update()
+        self.UI.update()
         
 
     def move(self):
@@ -137,7 +137,7 @@ class Player:
         self.bulletDraw()
         self.guardDraw()
         self.playerDraw() #一番下にすることで、一番手前に表示
-        self.ui.draw()
+        self.UI.draw()
         
 
     def bulletDraw(self):
