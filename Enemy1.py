@@ -1,14 +1,12 @@
 import pyxel
+import Enemy
 
-class Enemy1:
+class Enemy1(Enemy.Enemy):
     def __init__(self, x, y):
-        self.x = x
-        self.y = y
+        super().__init__(x, y, 10)
         self.vx = 2
         self.size = 4
-        self.color = 8 # red
-        self.hp = 10
-        self.knockback_vx = 0
+        self.color = 8 
 
     def update(self, player):
         if self.hp > 0:
@@ -21,46 +19,24 @@ class Enemy1:
                 self.x = 160 - 16
                 self.vx *= -1
             
-            self.x += self.knockback_vx
-            self.knockback_vx *= 0.9
-            if abs(self.knockback_vx) < 0.1:
-                self.knockback_vx = 0
-
-            if player.guarding and self.knockback_vx == 0: # Only check if not already being knocked back
-                gx = player.x
-                gy = player.y
-                gw = 8
-                gh = 16
-                
-                if player.facingLeft:
-                    gx = player.x - 7
-                else:
-                    gx = player.x + 15
-                
-                if (gx < self.x + 16 and gx + gw > self.x and
-                    gy < self.y + 16 and gy + gh > self.y):
-                    
-                    if player.facingLeft:
-                        self.knockback_vx = -5 
-                    else:
-                        self.knockback_vx = 5  
+            super().update_common(player)
     
-    def Damage(self, bullets):
-        if self.hp <= 0:
-            return
-            
-        for b in bullets:
-            # Bullet size 2x2, Enemy size 16x16
-            if (self.x < b.x + 2 and
-                self.x + 16 > b.x and
-                self.y < b.y + 2 and
-                self.y + 16 > b.y):
-                self.hp -= 1
-                b.life = 0 # Destroy bullet
-
     def draw(self):
         if self.hp > 0:
-            # Draw a red square for now
-            pyxel.rect(self.x, self.y, 16, 16, self.color)
-            # Or if we want to use sprite:
-            # pyxel.blt(self.x, self.y, 0, 48, 0, 16, 16, 0) # Assuming some sprite at 48
+            u = (pyxel.frame_count // 6 % 2) * 16
+            w = 16
+            if self.vx > 0: # Facing Right? Assuming sprite faces left by default or something? 
+                            # Let's assume sprite faces left like player usually does? 
+                            # Wait, Player code says `if self.facingLeft: w = -16`. 
+                            # This implies default (positive w) is Right facing? 
+                            # Let's look at Player.py again.
+                            # Player.py: u=... w=16. if facingLeft: w=-16. 
+                            # So default w=16 is Right. 
+                            # If Enemy vx > 0 (Right), w should be 16.
+                            # If Enemy vx < 0 (Left), w should be -16.
+                w = 16
+            else:
+                w = -16
+            
+            pyxel.blt(self.x, self.y, 0, u, 48, w, 16, 0)
+           
