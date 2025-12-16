@@ -148,10 +148,12 @@ class Player:
             return
 
         for enemy in enemies:
+            if enemy.hp <= 0:
+                break
+
             if (self.x < enemy.x + 16 and self.x + 16 > enemy.x and self.y < enemy.y + 16 and self.y + 16 > enemy.y):
                 self.hp -= 1
                 self.MutekiTime = 60
-                break # Hit one enemy is enough for this frame
         
 
     def bulletDraw(self):
