@@ -9,7 +9,7 @@ class Enemy:
         self.knockback_vx = 0
         self.color = 8
 
-    def update_common(self, player):
+    def update(self, player):
         # Knockback Physics
         self.x += self.knockback_vx
         self.knockback_vx *= 0.9

@@ -2,9 +2,11 @@ import pyxel
 import Enemy
 
 class Enemy1(Enemy.Enemy):
-    def __init__(self, x, y):
+    def __init__(self, x, y, min_x=0, max_x=144):
         super().__init__(x, y, 10)
         self.vx = 1
+        self.min_x = min_x
+        self.max_x = max_x
         self.size = 4
         self.color = 8 
 
@@ -12,14 +14,14 @@ class Enemy1(Enemy.Enemy):
         if self.hp > 0:
             self.x += self.vx
             
-            if self.x < 0:
-                self.x = 0
+            if self.x < self.min_x:
+                self.x = self.min_x
                 self.vx *= -1
-            if self.x > 160 - 16:
-                self.x = 160 - 16
+            if self.x > self.max_x:
+                self.x = self.max_x
                 self.vx *= -1
             
-            super().update_common(player)
+            super().update(player)
     
     def draw(self):
         if self.hp > 0:
