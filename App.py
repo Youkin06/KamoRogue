@@ -14,6 +14,7 @@ class App:
         self.player.update()
         self.enemy1.update()
         self.enemy1.Damage(self.player.bullets)
+        self.player.Damage(self.enemy1)
         
         
 

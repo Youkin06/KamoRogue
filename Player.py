@@ -9,6 +9,7 @@ class Player:
         #HP
         self.hp = 3
         self.max_hp = 3
+        self.MutekiTime = 0
         self.UI = PlayerUI.PlayerUI(self)
         
         #移動move
@@ -43,7 +44,7 @@ class Player:
 
         #画像image
         pyxel.load("my_resource.pyxres")
-
+        
         #ガードguard
         self.guarding = False
         self.guardMaxHeight = 16.0
@@ -55,6 +56,9 @@ class Player:
         self.guard()
         self.update_zanzou()
         self.UI.update()
+        
+        if self.MutekiTime > 0:
+            self.MutekiTime -= 1
         
 
     def move(self):
@@ -139,6 +143,15 @@ class Player:
         self.playerDraw() #一番下にすることで、一番手前に表示
         self.UI.draw()
         
+    def Damage(self, enemy):
+        if self.MutekiTime > 0:
+            return
+
+        if (self.x < enemy.x + 16 and self.x + 16 > enemy.x and self.y < enemy.y + 16 and self.y + 16 > enemy.y):
+            
+            self.hp -= 1
+            self.MutekiTime = 60
+        
 
     def bulletDraw(self):
         for i in self.bullets:
@@ -173,6 +186,9 @@ class Player:
             pyxel.blt(sx, sy, 0, u, v, w, h, 0)
 
     def playerDraw(self):
+        if self.MutekiTime > 0 and self.MutekiTime % 4 < 2:
+            return
+
         u = (pyxel.frame_count // 6 % 2) * 16
         w = 16
         if self.facingLeft:
