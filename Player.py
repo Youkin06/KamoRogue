@@ -74,7 +74,7 @@ class Player:
             self.last_key = pyxel.KEY_A
             self.key_timer = 0
             
-        # Dash Right
+        # Dash Right    
         if pyxel.btnp(pyxel.KEY_D):
             if self.last_key == pyxel.KEY_D and self.key_timer < 10:
                 self.zanzou.append(self.Zanzou(self.x, self.y, 32, 0, False, 5))
@@ -91,6 +91,12 @@ class Player:
         if pyxel.btn(pyxel.KEY_D):
             self.x += self.speed
             self.facingLeft = False
+            
+        # Screen bounds
+        if self.x < 0:
+            self.x = 0
+        if self.x > 160 - 16:
+            self.x = 160 - 16
             
         if pyxel.btnp(pyxel.KEY_W) and self.is_grounded and self.jumpCount < self.jumpMaxCount:
             self.vy = self.jump_strength

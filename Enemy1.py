@@ -7,19 +7,43 @@ class Enemy1:
         self.vx = 2
         self.size = 4
         self.color = 8 # red
-        self.hp = 10    
+        self.hp = 10
+        self.knockback_vx = 0
 
-    def update(self):
+    def update(self, player):
         if self.hp > 0:
             self.x += self.vx
             
-            # Turn around at screen edges
             if self.x < 0:
                 self.x = 0
                 self.vx *= -1
-            if self.x > 160 - 16: # 16 is approx sprite width
+            if self.x > 160 - 16:
                 self.x = 160 - 16
                 self.vx *= -1
+            
+            self.x += self.knockback_vx
+            self.knockback_vx *= 0.9
+            if abs(self.knockback_vx) < 0.1:
+                self.knockback_vx = 0
+
+            if player.guarding and self.knockback_vx == 0: # Only check if not already being knocked back
+                gx = player.x
+                gy = player.y
+                gw = 8
+                gh = 16
+                
+                if player.facingLeft:
+                    gx = player.x - 7
+                else:
+                    gx = player.x + 15
+                
+                if (gx < self.x + 16 and gx + gw > self.x and
+                    gy < self.y + 16 and gy + gh > self.y):
+                    
+                    if player.facingLeft:
+                        self.knockback_vx = -5 
+                    else:
+                        self.knockback_vx = 5  
     
     def Damage(self, bullets):
         if self.hp <= 0:

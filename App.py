@@ -15,11 +15,10 @@ class App:
     def update(self):
         self.player.update()
         for enemy in self.enemies:
-            enemy.update()
+            enemy.update(self.player)
             enemy.Damage(self.player.bullets)
         
         self.player.Damage(self.enemies)
-        
         
 
     def draw(self):
