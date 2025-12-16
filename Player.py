@@ -148,7 +148,6 @@ class Player:
             return
 
         if (self.x < enemy.x + 16 and self.x + 16 > enemy.x and self.y < enemy.y + 16 and self.y + 16 > enemy.y):
-            
             self.hp -= 1
             self.MutekiTime = 60
         
@@ -186,7 +185,7 @@ class Player:
             pyxel.blt(sx, sy, 0, u, v, w, h, 0)
 
     def playerDraw(self):
-        if self.MutekiTime > 0 and self.MutekiTime % 4 < 2:
+        if self.MutekiTime > 0 and self.MutekiTime % 6 < 5:
             return
 
         u = (pyxel.frame_count // 6 % 2) * 16
@@ -194,3 +193,5 @@ class Player:
         if self.facingLeft:
             w = -16
         pyxel.blt(self.x, self.y, 0, u, 0, w, 16, 0)
+
+    
