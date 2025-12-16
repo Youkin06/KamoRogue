@@ -7,20 +7,25 @@ class App:
         pyxel.init(160, 120, fps=30)
         pyxel.load("my_resource.pyxres")
         self.player = Player.Player()   
-        self.enemy1 = Enemy1.Enemy1(50, 80)
+        self.enemies = []
+        self.enemies.append(Enemy1.Enemy1(50, 80))
+        # self.enemies.append(Enemy1.Enemy1(100, 80))
         pyxel.run(self.update, self.draw)
 
     def update(self):
         self.player.update()
-        self.enemy1.update()
-        self.enemy1.Damage(self.player.bullets)
-        self.player.Damage(self.enemy1)
+        for enemy in self.enemies:
+            enemy.update()
+            enemy.Damage(self.player.bullets)
+        
+        self.player.Damage(self.enemies)
         
         
 
     def draw(self):
         pyxel.cls(0)
         self.player.draw()
-        self.enemy1.draw()
+        for enemy in self.enemies:
+            enemy.draw()
 
 App()
