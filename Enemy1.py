@@ -8,18 +8,22 @@ class Enemy1(Enemy.Enemy):
         self.min_x = min_x
         self.max_x = max_x
         self.size = 4
-        self.color = 8 
+        self.color = 8
+        self.deathEffectTime = 0
 
     def update(self, player):
-        if self.hp > 0:
-            self.x += self.vx
+        if self.hp <= 0:
+            self.deathEffectTime += 1
+            return 
+
+        self.x += self.vx
             
-            if self.x < self.min_x:
-                self.x = self.min_x
-                self.vx *= -1
-            if self.x > self.max_x:
-                self.x = self.max_x
-                self.vx *= -1
+        if self.x < self.min_x:
+            self.x = self.min_x
+            self.vx *= -1
+        if self.x > self.max_x:
+            self.x = self.max_x
+            self.vx *= -1
             
             super().update(player)
     
@@ -33,4 +37,7 @@ class Enemy1(Enemy.Enemy):
                 w = 16
             
             pyxel.blt(self.x, self.y, 0, u, 48, w, 16, 0)
+        elif self.deathEffectTime < 30:
+             u = (self.deathEffectTime // 10) * 16 + 32
+             pyxel.blt(self.x, self.y, 0, u, 48, 16, 16, 0)
            
