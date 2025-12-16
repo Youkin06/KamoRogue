@@ -20,4 +20,5 @@ class Bullet:
 
 
     def draw(self):
-        pyxel.rect(self.x, self.y, 2, 2, 10)
+        u = (pyxel.frame_count // 2 % 4) * 8
+        pyxel.blt(self.x, self.y - 3, 0, u, 40, 8, 8, 0)
