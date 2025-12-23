@@ -14,6 +14,7 @@ class Enemy1(Enemy.Enemy):
     def update(self, player):
         if self.hp <= 0:
             self.deathEffectTime += 1
+            self.update_effects()
             return 
 
         self.x += self.vx
@@ -25,7 +26,7 @@ class Enemy1(Enemy.Enemy):
             self.x = self.max_x
             self.vx *= -1
             
-            super().update(player)
+        super().update(player)
     
     def draw(self):
         if self.hp > 0:
@@ -40,4 +41,6 @@ class Enemy1(Enemy.Enemy):
         elif self.deathEffectTime < 30:
              u = (self.deathEffectTime // 10) * 16 + 32
              pyxel.blt(self.x, self.y, 0, u, 48, 16, 16, 0)
+        
+        self.draw_effects()
            

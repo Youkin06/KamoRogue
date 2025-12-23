@@ -1,4 +1,5 @@
 import pyxel
+import BulletEffect
 
 class Enemy:
     def __init__(self, x, y, hp):
@@ -8,6 +9,7 @@ class Enemy:
         self.vx = 0
         self.knockback_vx = 0
         self.color = 8
+        self.effects = []
 
     def update(self, player):
         # Knockback Physics
@@ -15,6 +17,8 @@ class Enemy:
         self.knockback_vx *= 0.9
         if abs(self.knockback_vx) < 0.1:
             self.knockback_vx = 0
+
+        self.update_effects()
 
         # Guard Collision
         if player.guarding and self.knockback_vx == 0:
@@ -45,3 +49,18 @@ class Enemy:
             if (self.x < b.x + 2 and self.x + 16 > b.x and self.y < b.y + 2 and self.y + 16 > b.y):
                 self.hp -= 1
                 b.life = 0
+                
+                FinalX = b.x
+                FinalY = b.y
+                self.effects.append(BulletEffect.BulletEffect(FinalX, FinalY))
+
+    def draw_effects(self):
+        for effect in self.effects:
+            effect.draw()
+
+    def update_effects(self):
+        new_effects = []
+        for effect in self.effects:
+            if effect.update():
+                new_effects.append(effect)
+        self.effects = new_effects
