@@ -5,8 +5,8 @@ import Enemy1
 class StageTest(Stage.Stage):
     def __init__(self):
         super().__init__()
-        self.enemies.append(Enemy1.Enemy1(50, 88))
-        self.enemies.append(Enemy1.Enemy1(150, 88, 100, 150))
+        self.enemies.append(Enemy1.Enemy1(0, 88))
+        self.enemies.append(Enemy1.Enemy1(150, 88, 0, 150))
 
     def draw(self):
         pyxel.bltm(0, 0, 0, 0, 0, 160, 120)

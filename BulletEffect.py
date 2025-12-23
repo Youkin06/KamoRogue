@@ -10,7 +10,7 @@ class BulletEffect:
 
     def update(self):
         self.frameTimer += 1
-        if self.frameTimer % 4 == 0: 
+        if self.frameTimer % 2 == 0: 
             self.frameIndex += 1
         
         if self.frameIndex >= 3:
