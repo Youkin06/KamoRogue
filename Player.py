@@ -107,8 +107,8 @@ class Player:
         self.y += self.vy
         
         # Simple floor collision
-        if self.y > 80:
-            self.y = 80
+        if self.y > 88:
+            self.y = 88
             self.vy = 0
             self.is_grounded = True
             self.jumpCount = 0
