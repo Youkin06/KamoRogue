@@ -19,7 +19,8 @@ class App:
 
     def draw(self):
         pyxel.cls(0)
-        self.player.draw()
         self.stage.draw()
+        self.player.draw()
+        
 
 App()
