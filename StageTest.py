@@ -9,5 +9,5 @@ class StageTest(Stage.Stage):
         self.enemies.append(Enemy1.Enemy1(150, 80, 100, 150))
 
     def draw(self):
-        pyxel.bltm(0, 0, 0, 0, 0, 160, 120)
+        pyxel.bltm(0, -8, 0, 0, 0, 160, 120)
         super().draw()
