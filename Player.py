@@ -2,6 +2,7 @@ import pyxel
 import Bullet
 import Zanzou
 import PlayerUI
+import PlayerAbility
 
 
 class Player:
@@ -11,6 +12,7 @@ class Player:
         self.max_hp = 3
         self.MutekiTime = 0
         self.UI = PlayerUI.PlayerUI(self)
+        self.playerAbility = PlayerAbility.PlayerAbility()
         
         #移動move
         self.x = 80
@@ -23,7 +25,7 @@ class Player:
 
         #ジャンプjump
         self.gravity = 1
-        self.jumpMaxCount = 2
+        # self.jumpMaxCount = 2
         self.jumpCount = 0
         self.jump_strength = -8
         self.is_grounded = False
@@ -66,7 +68,7 @@ class Player:
         
         # Dash Left
         if pyxel.btnp(pyxel.KEY_A):
-            if self.last_key == pyxel.KEY_A and self.key_timer < 10:
+            if self.last_key == pyxel.KEY_A and self.key_timer < 10 and self.playerAbility.CanDash == True:
                 self.zanzou.append(self.Zanzou(self.x, self.y, 32, 0, True, 5))
                 self.zanzou.append(self.Zanzou(self.x - self.dash_distance // 2.5, self.y, 48, 0, True, 10))
                 self.x -= self.dash_distance
@@ -76,7 +78,7 @@ class Player:
             
         # Dash Right    
         if pyxel.btnp(pyxel.KEY_D):
-            if self.last_key == pyxel.KEY_D and self.key_timer < 10:
+            if self.last_key == pyxel.KEY_D and self.key_timer < 10 and self.playerAbility.CanDash == True:
                 self.zanzou.append(self.Zanzou(self.x, self.y, 32, 0, False, 5))
                 self.zanzou.append(self.Zanzou(self.x + self.dash_distance // 1.5, self.y, 48, 0, False, 10))
                 self.x += self.dash_distance
@@ -98,7 +100,7 @@ class Player:
         if self.x > 160 - 16:
             self.x = 160 - 16
             
-        if pyxel.btnp(pyxel.KEY_W) and self.is_grounded and self.jumpCount < self.jumpMaxCount:
+        if pyxel.btnp(pyxel.KEY_W) and self.is_grounded and self.jumpCount < self.playerAbility.jumpMaxCount:
             self.vy = self.jump_strength
             #self.is_grounded = False
             self.jumpCount += 1
