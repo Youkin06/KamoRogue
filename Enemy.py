@@ -46,7 +46,7 @@ class Enemy:
             return
             
         for b in bullets:
-            if (self.x < b.x + 2 and self.x + 16 > b.x and self.y < b.y + 2 and self.y + 16 > b.y):
+            if (self.x + 4 < b.x + 2 and self.x + 12 > b.x and self.y < b.y + 2 and self.y + 16 > b.y):
                 self.hp -= 1
                 b.life = 0
                 
