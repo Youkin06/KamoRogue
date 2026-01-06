@@ -21,4 +21,4 @@ class Zanzou:
         if self.facingLeft:
             w = -16
         
-        pyxel.blt(self.x, self.y, 0, _u, _v, w, 16, 0)
+        pyxel.blt(self.x * 2 + 8, self.y * 2 + 8, 0, _u, _v, w, 16, 0, scale=2.0)

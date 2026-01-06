@@ -20,4 +20,4 @@ class BulletEffect:
 
     def draw(self):
         u = 24 + self.frameIndex * 8
-        pyxel.blt(self.x, self.y, 0, u, 40, 8, 8, 0)
+        pyxel.blt(self.x * 2 + 4, self.y * 2 + 4, 0, u, 40, 8, 8, 0, scale=2.0)

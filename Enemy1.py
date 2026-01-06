@@ -37,10 +37,10 @@ class Enemy1(Enemy.Enemy):
             else:
                 w = 16
             
-            pyxel.blt(self.x, self.y, 0, u, 48, w, 16, 0)
+            pyxel.blt(self.x * 2 + 8, self.y * 2 + 8, 0, u, 48, w, 16, 0, scale=2.0)
         elif self.deathEffectTime < 30:
              u = (self.deathEffectTime // 10) * 16 + 32
-             pyxel.blt(self.x, self.y, 0, u, 48, 16, 16, 0)
+             pyxel.blt(self.x * 2 + 8, self.y * 2 + 8, 0, u, 48, 16, 16, 0, scale=2.0)
         
         self.draw_effects()
            

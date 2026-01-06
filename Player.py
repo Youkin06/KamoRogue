@@ -226,7 +226,7 @@ class Player:
             else:
                 sx = self.x + 15
 
-            pyxel.blt(sx, sy, 0, u, v, w, h, 0)
+            pyxel.blt(sx * 2 + 4, sy * 2 + 8, 0, u, v, w, h, 0, scale=2.0)
 
     def playerDraw(self):
         if self.MutekiTime > 0 and self.MutekiTime % 6 < 5:
@@ -236,6 +236,6 @@ class Player:
         w = 16
         if self.facingLeft:
             w = -16
-        pyxel.blt(self.x, self.y, 0, u, 0, w, 16, 0)
+        pyxel.blt(self.x * 2 + 8, self.y * 2 + 8, 0, u, 0, w, 16, 0, scale=2.0)
 
     

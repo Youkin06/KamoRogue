@@ -7,7 +7,7 @@ import PlayerAbility
 
 class GameManager:
     def __init__(self):
-        pyxel.init(160, 120, fps=30)
+        pyxel.init(320, 240, fps=30)
         pyxel.load("my_resource.pyxres")
         
         self.player = Player.Player()
@@ -46,14 +46,14 @@ class GameManager:
         pyxel.cls(0)
         
         if self.currentSceneState == 0:
-            pyxel.text(50, 50, "KAMO ROGUE", 7)
-            pyxel.text(45, 70, "PRESS ENTER TO START", 7)
+            pyxel.text(100, 100, "KAMO ROGUE", 7)
+            pyxel.text(90, 140, "PRESS ENTER TO START", 7)
             
         elif self.currentSceneState == 1:
             self.stage.draw()
             self.player.draw()
             
         elif self.currentSceneState == 2:
-            pyxel.text(60, 50, "GAME OVER", 7)
+            pyxel.text(120, 100, "GAME OVER", 7)
         elif self.currentSceneState == 3:
             self.abilitySelectScene.draw()

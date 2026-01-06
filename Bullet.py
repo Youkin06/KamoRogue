@@ -24,4 +24,4 @@ class Bullet:
         w = 8
         if self.facingLeft:
             w = -8
-        pyxel.blt(self.x, self.y - 3, 0, u, 40, w, 8, 0)
+        pyxel.blt(self.x * 2 + 4, (self.y - 3) * 2 + 4, 0, u, 40, w, 8, 0, scale=2.0)
