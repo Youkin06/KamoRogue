@@ -19,7 +19,7 @@ class Player:
         self.y = 0
         self.vx = 0 #x軸方向の速度
         self.vy = 0 #y軸方向の速度
-        self.speed = 1
+        self.speed = 1.5
         self.size = 4
         self.color = 8
 
@@ -27,7 +27,7 @@ class Player:
         self.gravity = 1
         # self.jumpMaxCount = 2
         self.jumpCount = 0
-        self.jump_strength = -8
+        self.jump_strength = -9
         self.is_grounded = False
         
         # ダッシュdash
@@ -191,7 +191,7 @@ class Player:
             if enemy.hp <= 0:
                 break
 
-            if (self.x < enemy.x + 16 and self.x + 16 > enemy.x and self.y < enemy.y + 16 and self.y + 16 > enemy.y):
+            if (self.x < enemy.x + 14 and self.x + 16 > enemy.x + 2 and self.y < enemy.y + 15 and self.y + 16 > enemy.y + 1):
                 self.hp -= 1
                 self.MutekiTime = 60
         

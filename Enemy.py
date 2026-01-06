@@ -33,8 +33,8 @@ class Enemy:
                 gx = player.x + 15
             
             # Check collision with Guard Hitbox
-            if (gx < self.x + 16 and gx + gw > self.x and
-                gy < self.y + 16 and gy + gh > self.y):
+            if (gx < self.x + 14 and gx + gw > self.x + 2 and
+                gy < self.y + 15 and gy + gh > self.y + 1):
                 
                 if player.facingLeft:
                     self.knockback_vx = -5 
@@ -46,7 +46,9 @@ class Enemy:
             return
             
         for b in bullets:
-            if (self.x < b.x + 2 and self.x + 12 > b.x and self.y < b.y + 2 and self.y + 16 > b.y):
+            # Bullet 8x8 vs Enemy 12x14 (Offset 2, 1)
+            if (self.x + 2 < b.x + 8 and self.x + 14 > b.x and 
+                self.y + 1 < b.y + 8 and self.y + 15 > b.y):
                 self.hp -= 1
                 b.life = 0
                 

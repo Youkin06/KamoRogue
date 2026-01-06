@@ -66,8 +66,7 @@ class AbilitySelectScene:
                 # Draw Ability Name (y=66 -> 132)
                 name = ability.name
                 # Centering for 8px font in 64px box:
-                # BoxCenter = draw_x + 32
-                # TextWidth = len(name) * 8
+                # TextWidth = len(name) * 8 (approx)
                 # Start = draw_x + 32 - (len * 4)
                 name_draw_x = draw_x + 32 - (len(name) * 4)
                 self.writer.draw(name_draw_x, 132, name, 8, 7)
