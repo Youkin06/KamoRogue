@@ -17,9 +17,9 @@ def apply_shield(player_ability):
     player_ability.CanGuard = True
 
 ability_list = [
-    Ability("Double Jump", 24, 32, apply_double_jump),
-    Ability("Dash", 32, 32, apply_dash),
-    Ability("Shield", 16, 32, apply_shield)
+    Ability("Double Jump", 32, 112, apply_double_jump),
+    Ability("Dash", 48, 112, apply_dash),
+    Ability("Shield", 16, 112, apply_shield)
 ]
 
 class PlayerAbility:

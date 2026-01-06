@@ -32,7 +32,7 @@ class AbilitySelectScene:
                 # I'll leave state as is for now as requested.
 
     def draw(self):
-        pyxel.text(50, 20, "AbilitySelect", 7)
+        pyxel.text(50, 20, "ABILITY SELECT", 7)
         
         # Define box positions
         box_positions = [(16, 30), (64, 30), (112, 30)]
@@ -51,9 +51,9 @@ class AbilitySelectScene:
             # Draw Ability Icon (if options exist)
             if i < len(self.options):
                 ability = self.options[i]
-                # Center icon in 32x32 box (8x8 icon) -> offset 12
-                # x + 12, y + 12
-                pyxel.blt(x + 12, y + 12, 0, ability.u, ability.v, 8, 8, 0)
+                # Center icon in 32x32 box (16x16 icon) -> offset 8
+                # x + 8, y + 8
+                pyxel.blt(x + 8, y + 8, 0, ability.u, ability.v, 16, 16, 0)
 
         # Draw Controls
         # Left Control (Closer to center)
