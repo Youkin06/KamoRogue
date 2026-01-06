@@ -9,7 +9,9 @@ class GameManager:
         
         self.player = Player.Player()
         self.stage = StageTest.StageTest()
-        self.currentSceneState = 0 # 0: Title, 1: Game, 2: Result
+        self.player = Player.Player()
+        self.stage = StageTest.StageTest()
+        self.currentSceneState = 0 # 0: Title, 1: Game, 2: Result, 3: AbilitySelect
         
         pyxel.run(self.update, self.draw)
 
@@ -26,8 +28,13 @@ class GameManager:
             if self.player.hp <= 0:
                 self.currentSceneState = 2
                 
+            if len(self.stage.enemies) == 0:
+                self.currentSceneState = 3
+                
         elif self.currentSceneState == 2:
             pass 
+        elif self.currentSceneState == 3:
+            pass
 
     def draw(self):
         pyxel.cls(0)
@@ -42,3 +49,5 @@ class GameManager:
             
         elif self.currentSceneState == 2:
             pyxel.text(60, 50, "GAME OVER", 7)
+        elif self.currentSceneState == 3:
+            pyxel.text(50, 50, "AbilitySelect", 7)
