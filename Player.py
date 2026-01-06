@@ -52,8 +52,8 @@ class Player:
         self.guardMaxHeight = 16.0
         self.guardHeight = 16.0
         
-    def update(self):
-        self.move()
+    def update(self, stage=None):
+        self.move(stage)
         self.attack()
         self.guard()
         self.update_zanzou()
@@ -63,7 +63,7 @@ class Player:
             self.MutekiTime -= 1
         
 
-    def move(self):
+    def move(self, stage=None):
         self.key_timer += 1
         
         # Dash Left
@@ -86,13 +86,29 @@ class Player:
             self.last_key = pyxel.KEY_D
             self.key_timer = 0
             
+        # Horizontal Movement
+        vx = 0
         if pyxel.btn(pyxel.KEY_A):
-            self.x -= self.speed
+            vx = -self.speed
             self.facingLeft = True
             
         if pyxel.btn(pyxel.KEY_D):
-            self.x += self.speed
+            vx = self.speed
             self.facingLeft = False
+        
+        self.x += vx
+        
+        # Horizontal Collision with Stage
+        if stage:
+            for tile in stage.collision_tiles:
+                tx, ty = tile[0] * 8, tile[1] * 8
+                if (self.x < tx + 8 and self.x + 16 > tx and
+                    self.y < ty + 8 and self.y + 16 > ty):
+                    # Collision detected
+                    if vx > 0: # Moving Right
+                        self.x = tx - 16
+                    elif vx < 0: # Moving Left
+                        self.x = tx + 8
             
         # Screen bounds
         if self.x < 0:
@@ -107,6 +123,22 @@ class Player:
             
         self.vy += self.gravity
         self.y += self.vy
+        
+        # Vertical Collision with Stage
+        if stage:
+            for tile in stage.collision_tiles:
+                tx, ty = tile[0] * 8, tile[1] * 8
+                if (self.x < tx + 8 and self.x + 16 > tx and
+                    self.y < ty + 8 and self.y + 16 > ty):
+                    # Collision detected
+                    if self.vy > 0: # Falling
+                        self.y = ty - 16
+                        self.vy = 0
+                        self.is_grounded = True
+                        self.jumpCount = 0
+                    elif self.vy < 0: # Jumping up
+                        self.y = ty + 8
+                        self.vy = 0
         
         # Simple floor collision
         if self.y > 88:
@@ -126,7 +158,7 @@ class Player:
             self.bullets.append(self.Bullet(self.x, self.y, self.facingLeft))
 
     def guard(self):
-        if pyxel.btn(pyxel.KEY_K):
+        if pyxel.btn(pyxel.KEY_K) and self.playerAbility.CanGuard == True:
             self.guarding = True
             self.guardHeight -= 0.07
             if self.guardHeight < 0:

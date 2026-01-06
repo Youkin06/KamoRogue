@@ -19,7 +19,7 @@ class GameManager:
                 self.currentSceneState = 1
                 
         elif self.currentSceneState == 1:
-            self.player.update()
+            self.player.update(self.stage)
             self.stage.update(self.player)
             self.player.Damage(self.stage.enemies)
             
