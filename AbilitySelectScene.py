@@ -51,20 +51,28 @@ class AbilitySelectScene:
             # Draw Ability Icon (if options exist)
             if i < len(self.options):
                 ability = self.options[i]
-                # Center icon in 32x32 box (16x16 icon) -> offset 8
-                # x + 8, y + 8
                 pyxel.blt(x + 8, y + 8, 0, ability.u, ability.v, 16, 16, 0)
+                
+                # Draw Ability Name (y=66)
+                name = ability.name
+                name_x = x + 16 - (len(name) * 4) // 2
+                pyxel.text(name_x, 66, name, 7)
+                
+                # Draw Ability Description (y=74)
+                desc = ability.description
+                desc_x = x + 16 - (len(desc) * 4) // 2
+                pyxel.text(desc_x, 74, desc, 7)
 
         # Draw Controls
         # Left Control (Closer to center)
         # Arrow Left (32, 96) -> x=40
-        pyxel.blt(40, 70, 0, 32, 96, 16, 16, 0)
+        pyxel.blt(40, 100, 0, 32, 96, 16, 16, 0)
         # Key A (0, 96) -> x=56
-        pyxel.blt(56, 70, 0, 0, 96, 16, 16, 0)
+        pyxel.blt(56, 100, 0, 0, 96, 16, 16, 0)
         
         # Right Control (Closer to center)
         # Key D (16, 96) -> x=88
-        pyxel.blt(88, 70, 0, 16, 96, 16, 16, 0)
+        pyxel.blt(88, 100, 0, 16, 96, 16, 16, 0)
         # Arrow Right (32, 96) flipped -> x=104
-        pyxel.blt(104, 70, 0, 32, 96, -16, 16, 0)
+        pyxel.blt(104, 100, 0, 32, 96, -16, 16, 0)
         

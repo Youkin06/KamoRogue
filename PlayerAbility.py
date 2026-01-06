@@ -1,10 +1,12 @@
+import PyxelUniversalFont
 import pyxel
 
 class Ability:
-    def __init__(self, name, u, v, apply_func):
+    def __init__(self, name, u, v, description, apply_func):
         self.name = name
         self.u = u
         self.v = v
+        self.description = description
         self.apply = apply_func
 
 def apply_double_jump(player_ability):
@@ -17,9 +19,9 @@ def apply_shield(player_ability):
     player_ability.CanGuard = True
 
 ability_list = [
-    Ability("Double Jump", 32, 112, apply_double_jump),
-    Ability("Dash", 48, 112, apply_dash),
-    Ability("Shield", 16, 112, apply_shield)
+    Ability("Double Jump", 32, 112, "Spaceでジャンプ", apply_double_jump),
+    Ability("Dash", 48, 112, "Move fast", apply_dash),
+    Ability("Shield", 16, 112, "Block attacks", apply_shield)
 ]
 
 class PlayerAbility:
