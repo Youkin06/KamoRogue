@@ -48,13 +48,12 @@ class AbilitySelectScene:
                 # Draw sprite highlight (32, 64) size 32x32
                 pyxel.blt(x, y, 0, 32, 64, 32, 32, 0)
 
-            # Draw Ability Name (if options exist)
+            # Draw Ability Icon (if options exist)
             if i < len(self.options):
-                name = self.options[i].name
-                # Center text roughly. 32 pixel box. Char width 4.
-                # x + (32 - len*4)/2
-                text_x = x # Simple alignment
-                pyxel.text(text_x, y - 8, name, 7)
+                ability = self.options[i]
+                # Center icon in 32x32 box (8x8 icon) -> offset 12
+                # x + 12, y + 12
+                pyxel.blt(x + 12, y + 12, 0, ability.u, ability.v, 8, 8, 0)
 
         # Draw Controls
         # Left Control (Closer to center)

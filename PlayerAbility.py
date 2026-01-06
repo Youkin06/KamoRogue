@@ -1,8 +1,10 @@
 import pyxel
 
 class Ability:
-    def __init__(self, name, apply_func):
+    def __init__(self, name, u, v, apply_func):
         self.name = name
+        self.u = u
+        self.v = v
         self.apply = apply_func
 
 def apply_double_jump(player_ability):
@@ -15,9 +17,9 @@ def apply_shield(player_ability):
     player_ability.CanGuard = True
 
 ability_list = [
-    Ability("Double Jump", apply_double_jump),
-    Ability("Dash", apply_dash),
-    Ability("Shield", apply_shield)
+    Ability("Double Jump", 24, 32, apply_double_jump),
+    Ability("Dash", 32, 32, apply_dash),
+    Ability("Shield", 16, 32, apply_shield)
 ]
 
 class PlayerAbility:
