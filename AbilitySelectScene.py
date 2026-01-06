@@ -1,7 +1,10 @@
 import pyxel
+import PyxelUniversalFont as puf
 
 class AbilitySelectScene:
     def __init__(self):
+        self.writer = puf.Writer("misaki_gothic.ttf")
+
         self.selected_index = 0
         self.options = []
         self.player = None
@@ -32,7 +35,7 @@ class AbilitySelectScene:
                 # I'll leave state as is for now as requested.
 
     def draw(self):
-        pyxel.text(50, 20, "ABILITY SELECT", 7)
+        self.writer.draw(45, 20, "ABILITY SELECT", 10, 16)
         
         # Define box positions
         box_positions = [(16, 30), (64, 30), (112, 30)]
