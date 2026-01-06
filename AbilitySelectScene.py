@@ -3,6 +3,13 @@ import pyxel
 class AbilitySelectScene:
     def __init__(self):
         self.selected_index = 0
+        self.options = []
+        self.player = None
+
+    def set_options(self, options, player):
+        self.options = options
+        self.player = player
+        self.selected_index = 0
 
     def update(self):
         if pyxel.btnp(pyxel.KEY_A):
@@ -14,6 +21,15 @@ class AbilitySelectScene:
             self.selected_index += 1
             if self.selected_index > 2:
                 self.selected_index = 2
+                
+        if pyxel.btnp(pyxel.KEY_RETURN):
+            if self.options and self.player:
+                selected_ability = self.options[self.selected_index]
+                print(selected_ability.name)
+                selected_ability.apply(self.player.playerAbility)
+                # Ensure we don't apply multiple times in loop, maybe switch state back or something?
+                # User didn't specify next step, just print and apply. 
+                # I'll leave state as is for now as requested.
 
     def draw(self):
         pyxel.text(50, 20, "AbilitySelect", 7)
@@ -32,16 +48,24 @@ class AbilitySelectScene:
                 # Draw sprite highlight (32, 64) size 32x32
                 pyxel.blt(x, y, 0, 32, 64, 32, 32, 0)
 
+            # Draw Ability Name (if options exist)
+            if i < len(self.options):
+                name = self.options[i].name
+                # Center text roughly. 32 pixel box. Char width 4.
+                # x + (32 - len*4)/2
+                text_x = x # Simple alignment
+                pyxel.text(text_x, y - 8, name, 7)
+
         # Draw Controls
-        # Left Control (Under Left Box)
-        # Arrow Left (32, 96) -> x=16
-        pyxel.blt(16, 70, 0, 32, 96, 16, 16, 0)
-        # Key A (0, 96) -> x=32
-        pyxel.blt(32, 70, 0, 0, 96, 16, 16, 0)
+        # Left Control (Closer to center)
+        # Arrow Left (32, 96) -> x=40
+        pyxel.blt(40, 70, 0, 32, 96, 16, 16, 0)
+        # Key A (0, 96) -> x=56
+        pyxel.blt(56, 70, 0, 0, 96, 16, 16, 0)
         
-        # Right Control (Under Right Box)
-        # Key D (16, 96) -> x=112
-        pyxel.blt(112 + 10 , 70, 0, 16, 96, 16, 16, 0)
-        # Arrow Right (32, 96) flipped -> x=128
-        pyxel.blt(128 - 10, 70, 0, 32, 96, -16, 16, 0)
+        # Right Control (Closer to center)
+        # Key D (16, 96) -> x=88
+        pyxel.blt(88, 70, 0, 16, 96, 16, 16, 0)
+        # Arrow Right (32, 96) flipped -> x=104
+        pyxel.blt(104, 70, 0, 32, 96, -16, 16, 0)
         

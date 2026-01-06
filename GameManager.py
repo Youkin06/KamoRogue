@@ -2,6 +2,8 @@ import pyxel
 import Player
 import StageTest
 import AbilitySelectScene
+import random
+import PlayerAbility
 
 class GameManager:
     def __init__(self):
@@ -32,6 +34,8 @@ class GameManager:
                 
             if len(self.stage.enemies) == 0:
                 self.currentSceneState = 3
+                selected_abilities = random.sample(PlayerAbility.ability_list, 3)
+                self.abilitySelectScene.set_options(selected_abilities, self.player)
                 
         elif self.currentSceneState == 2:
             pass 
