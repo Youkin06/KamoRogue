@@ -35,7 +35,7 @@ class AbilitySelectScene:
                 # I'll leave state as is for now as requested.
 
     def draw(self):
-        self.writer.draw(48, 40, "ABILITY SELECT", 16, 7)
+        self.writer.draw(105, 40, "ABILITY SELECT", 16, 7)
         
         # Define box positions
         box_positions = [(16, 30), (64, 30), (112, 30)]
