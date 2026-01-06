@@ -35,7 +35,7 @@ class AbilitySelectScene:
                 # I'll leave state as is for now as requested.
 
     def draw(self):
-        self.writer.draw(45, 20, "ABILITY SELECT", 10, 16)
+        self.writer.draw(45, 20, "ABILITY SELECT", 8, 7)
         
         # Define box positions
         box_positions = [(16, 30), (64, 30), (112, 30)]
@@ -58,13 +58,14 @@ class AbilitySelectScene:
                 
                 # Draw Ability Name (y=66)
                 name = ability.name
-                name_x = x + 16 - (len(name) * 4) // 2
-                pyxel.text(name_x, 66, name, 7)
+                # Centering for 8px font: x + 16 - (len * 8 / 2) = x + 16 - (len * 4)
+                name_x = x + 16 - (len(name) * 4) 
+                self.writer.draw(name_x, 66, name, 8, 7)
                 
                 # Draw Ability Description (y=74)
                 desc = ability.description
-                desc_x = x + 16 - (len(desc) * 4) // 2
-                pyxel.text(desc_x, 74, desc, 7)
+                desc_x = x + 16 - (len(desc) * 4)
+                self.writer.draw(desc_x, 74, desc, 8, 7)
 
         # Draw Controls
         # Left Control (Closer to center)
