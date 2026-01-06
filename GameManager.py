@@ -1,6 +1,7 @@
 import pyxel
 import Player
 import StageTest
+import AbilitySelectScene
 
 class GameManager:
     def __init__(self):
@@ -11,6 +12,7 @@ class GameManager:
         self.stage = StageTest.StageTest()
         self.player = Player.Player()
         self.stage = StageTest.StageTest()
+        self.abilitySelectScene = AbilitySelectScene.AbilitySelectScene()
         self.currentSceneState = 0 # 0: Title, 1: Game, 2: Result, 3: AbilitySelect
         
         pyxel.run(self.update, self.draw)
@@ -34,7 +36,7 @@ class GameManager:
         elif self.currentSceneState == 2:
             pass 
         elif self.currentSceneState == 3:
-            pass
+            self.abilitySelectScene.update()
 
     def draw(self):
         pyxel.cls(0)
@@ -50,4 +52,4 @@ class GameManager:
         elif self.currentSceneState == 2:
             pyxel.text(60, 50, "GAME OVER", 7)
         elif self.currentSceneState == 3:
-            pyxel.text(50, 50, "AbilitySelect", 7)
+            self.abilitySelectScene.draw()
