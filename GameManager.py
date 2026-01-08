@@ -1,6 +1,6 @@
 import pyxel
 import Player
-import StageTest
+import Stage1
 import AbilitySelectScene
 import random
 import PlayerAbility
@@ -11,9 +11,7 @@ class GameManager:
         pyxel.load("my_resource.pyxres")
         
         self.player = Player.Player()
-        self.stage = StageTest.StageTest()
-        self.player = Player.Player()
-        self.stage = StageTest.StageTest()
+        self.stage = Stage1.Stage1()
         self.abilitySelectScene = AbilitySelectScene.AbilitySelectScene()
         self.currentSceneState = 0 # 0: Title, 1: Game, 2: Result, 3: AbilitySelect
         
