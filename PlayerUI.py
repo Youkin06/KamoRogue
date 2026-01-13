@@ -16,14 +16,10 @@ class PlayerUI:
             pyxel.blt((5 + i * 10) * 2 + 4, 5 * 2 + 4, 0, 0, 32, 8, 8, 0, scale=2.0)
 
     def AbilityDraw(self):
-        # Draw acquired abilities from right to left
-        # Start X = 320 - 20 (padding)
-        # Y = 14 (same as HP)
         start_x = 300
         y = 14
         spacing = 20
         
-        # Coordinates mapping
         ability_coords = {
             "shield": (16, 32),
             "double_jump": (24, 32),
