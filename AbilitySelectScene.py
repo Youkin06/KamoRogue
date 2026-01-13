@@ -29,7 +29,7 @@ class AbilitySelectScene:
             if self.options and self.player:
                 selected_ability = self.options[self.selected_index]
                 print(selected_ability.name)
-                selected_ability.apply(self.player.playerAbility)
+                selected_ability.apply(self.player)
                 return True
         return False
 

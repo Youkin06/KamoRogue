@@ -24,7 +24,8 @@ class PlayerUI:
         ability_coords = {
             "shield": (16, 32),
             "double_jump": (24, 32),
-            "dash": (32, 32)
+            "dash": (32, 32),
+            "heart": (40, 32)
         }
         
         for i, ability_name in enumerate(self.player.playerAbility.acquired_abilities):

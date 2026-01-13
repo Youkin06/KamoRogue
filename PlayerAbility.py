@@ -9,22 +9,28 @@ class Ability:
         self.description = description
         self.apply = apply_func
 
-def apply_double_jump(player_ability):
-    player_ability.jumpMaxCount = 2
-    player_ability.acquired_abilities.append("double_jump")
+def apply_double_jump(player):
+    player.playerAbility.jumpMaxCount = 2
+    player.playerAbility.acquired_abilities.append("double_jump")
 
-def apply_dash(player_ability):
-    player_ability.CanDash = True
-    player_ability.acquired_abilities.append("dash")
+def apply_dash(player):
+    player.playerAbility.CanDash = True
+    player.playerAbility.acquired_abilities.append("dash")
 
-def apply_shield(player_ability):
-    player_ability.CanGuard = True
-    player_ability.acquired_abilities.append("shield")
+def apply_shield(player):
+    player.playerAbility.CanGuard = True
+    player.playerAbility.acquired_abilities.append("shield")
+
+def apply_heart(player):
+    player.max_hp += 1
+    player.hp += 1
+    player.playerAbility.acquired_abilities.append("heart")
 
 ability_list = [
     Ability("ダブルジャンプ", 32, 112, "Wキーを二回押す", apply_double_jump),
     Ability("ダッシュ", 48, 112, "方向キー（ADキー）を二度押す", apply_dash),
-    Ability("シールド", 16, 112, "Kキーを押す", apply_shield)
+    Ability("シールド", 16, 112, "Kキーを押す", apply_shield),
+    Ability("ハート", 64, 112, "HPハートを1つ追加", apply_heart)
 ]
 
 class PlayerAbility:
