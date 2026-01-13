@@ -77,10 +77,19 @@ class AbilitySelectScene:
 
         # Draw Controls (y=100 -> 200)
         # Left Control W=16 -> Offset +8
-        pyxel.blt(80 + 8, 200 + 8, 0, 32, 96, 16, 16, 0, scale=2.0)
-        pyxel.blt(112 + 8, 200 + 8, 0, 0, 96, 16, 16, 0, scale=2.0)
+        #pyxel.blt(80 + 8, 200 + 8, 0, 32, 96, 16, 16, 0, scale=2.0)
+        #pyxel.blt(112 + 8, 200 + 8, 0, 0, 96, 16, 16, 0, scale=2.0)
         
         # Right Control
-        pyxel.blt(176 + 8, 200 + 8, 0, 16, 96, 16, 16, 0, scale=2.0)
-        pyxel.blt(208 + 8, 200 + 8, 0, 32, 96, -16, 16, 0, scale=2.0)
+        #pyxel.blt(176 + 8, 200 + 8, 0, 16, 96, 16, 16, 0, scale=2.0)
+        #pyxel.blt(208 + 8, 200 + 8, 0, 32, 96, -16, 16, 0, scale=2.0)
+
+        #ADキー
+        pyxel.blt(140, 200-8, 0, 0, 96, 20+1, 13, 0, scale=2.0)
+        # SELECT文字
+        pyxel.blt(139, 232-8, 0, 23, 96, 18+6, 5, 0, scale=2.0)
+        #Enterキー
+        pyxel.blt(140 + 120, 200-8, 0, 48, 96, 25, 13, 0, scale=2.0)
+        #CONFILM文字
+        pyxel.blt(140 + 120, 232-8, 0, 23, 102, 18+6, 5, 0, scale=2.0)
         
