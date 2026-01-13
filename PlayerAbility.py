@@ -11,12 +11,15 @@ class Ability:
 
 def apply_double_jump(player_ability):
     player_ability.jumpMaxCount = 2
+    player_ability.acquired_abilities.append("double_jump")
 
 def apply_dash(player_ability):
     player_ability.CanDash = True
+    player_ability.acquired_abilities.append("dash")
 
 def apply_shield(player_ability):
     player_ability.CanGuard = True
+    player_ability.acquired_abilities.append("shield")
 
 ability_list = [
     Ability("ダブルジャンプ", 32, 112, "Wキーを二回押す", apply_double_jump),
@@ -29,6 +32,7 @@ class PlayerAbility:
         self.jumpMaxCount = 1
         self.CanDash = False
         self.CanGuard = False
+        self.acquired_abilities = []
         
 
 
