@@ -1,5 +1,6 @@
 import pyxel
 import Enemy
+import EnemyBullet
 
 class Enemy2(Enemy.Enemy):
     def __init__(self, x, y, min_x=0, max_x=144):
@@ -10,6 +11,9 @@ class Enemy2(Enemy.Enemy):
         self.size = 4
         self.color = 8
         self.deathEffectTime = 0
+        self.bullets = []
+        self.shoot_timer = 0
+        self.shoot_interval = 60
 
     def update(self, player):
         if self.hp <= 0:
@@ -26,6 +30,23 @@ class Enemy2(Enemy.Enemy):
             self.x = self.max_x
             self.vx *= -1
             
+        # Shooting logic
+        self.shoot_timer += 1
+        if self.shoot_timer >= self.shoot_interval:
+            self.shoot_timer = 0
+            # Fire in direction of movement
+            # Bullet vx = self.vx * 2 (faster than enemy)
+            b_vx = 2 if self.vx > 0 else -2
+            self.bullets.append(EnemyBullet.EnemyBullet(self.x, self.y, b_vx, 0))
+            
+        # Update bullets
+        new_bullets = []
+        for b in self.bullets:
+            b.update()
+            if b.is_active:
+                new_bullets.append(b)
+        self.bullets = new_bullets
+
         super().update(player)
     
     def draw(self):
@@ -48,16 +69,9 @@ class Enemy2(Enemy.Enemy):
                 pyxel.pal() # Reset palette
         elif self.deathEffectTime < 30:
              u = (self.deathEffectTime // 10) * 16 + 32
-             # Note: User said "same as death animation", so I assume death effect source Y is also 48? 
-             # "死んだ時のアニメーション、idle全て同じです。y軸のみ違います。y座標を128にしてください。"
-             # "y-axis ONLY is different. Please set y-coordinate to 128."
-             # Does this apply to death effect too?
-             # Death effect sprite is at 48 in Enemy1. 
-             # If "everything is same except y-axis", technically death animation might also need to be at 128 if the sprite sheet is arranged that way.
-             # However, common sense suggests death effect might be shared.
-             # BUT, user said "set y-coordinate to 128".
-             # Let's assume the sprite sheet has a full set of Enemy2 sprites at y=128.
-             # So I will change this to 128 as well.
              pyxel.blt(self.x * 2 + 8, self.y * 2 + 8, 0, u, 128, 16, 16, 0, scale=2.0)
         
+        for b in self.bullets:
+            b.draw()
+
         self.draw_effects()

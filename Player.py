@@ -188,12 +188,27 @@ class Player:
             return
 
         for enemy in enemies:
+            # Check collision with enemy bullets
+            if hasattr(enemy, "bullets"):
+                for b in enemy.bullets:
+                    # Bullet 8x8 vs Player 16x16
+                    # Use slightly smaller hitboxes for better feel
+                    if (b.is_active and 
+                        self.x < b.x + 6 and self.x + 16 > b.x + 2 and
+                        self.y < b.y + 6 and self.y + 16 > b.y + 2):
+                        
+                        self.hp -= 1
+                        self.MutekiTime = 60
+                        b.is_active = False
+                        return
+
             if enemy.hp <= 0:
-                break
+                continue
 
             if (self.x < enemy.x + 14 and self.x + 16 > enemy.x + 2 and self.y < enemy.y + 15 and self.y + 16 > enemy.y + 1):
                 self.hp -= 1
                 self.MutekiTime = 60
+                return
         
 
     def bulletDraw(self):
