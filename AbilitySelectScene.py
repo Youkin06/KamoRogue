@@ -30,9 +30,8 @@ class AbilitySelectScene:
                 selected_ability = self.options[self.selected_index]
                 print(selected_ability.name)
                 selected_ability.apply(self.player.playerAbility)
-                # Ensure we don't apply multiple times in loop, maybe switch state back or something?
-                # User didn't specify next step, just print and apply. 
-                # I'll leave state as is for now as requested.
+                return True
+        return False
 
     def draw(self):
         self.writer.draw(105, 40, "ABILITY SELECT", 16, 7)

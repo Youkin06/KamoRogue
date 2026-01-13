@@ -1,6 +1,7 @@
 import pyxel
 import Player
 import Stage1
+import Stage2
 import AbilitySelectScene
 import random
 import PlayerAbility
@@ -12,6 +13,7 @@ class GameManager:
         
         self.player = Player.Player()
         self.stage = Stage1.Stage1()
+
         self.abilitySelectScene = AbilitySelectScene.AbilitySelectScene()
         self.currentSceneState = 0 # 0: Title, 1: Game, 2: Result, 3: AbilitySelect
         
@@ -38,7 +40,12 @@ class GameManager:
         elif self.currentSceneState == 2:
             pass 
         elif self.currentSceneState == 3:
-            self.abilitySelectScene.update()
+            if self.abilitySelectScene.update():
+                self.stage = Stage2.Stage2()
+                self.currentSceneState = 1
+                self.player.x = 80
+                self.player.y = 0
+                self.player.vy = 0
 
     def draw(self):
         pyxel.cls(0)
