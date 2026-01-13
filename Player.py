@@ -56,6 +56,8 @@ class Player:
         self.move(stage)
         self.attack()
         self.guard()
+        if stage:
+            self.reflect_bullets(stage.enemies)
         self.update_zanzou()
         self.UI.update()
         
@@ -254,3 +256,34 @@ class Player:
         pyxel.blt(self.x * 2 + 8, self.y * 2 + 8, 0, u, 0, w, 16, 0, scale=2.0)
 
     
+    def reflect_bullets(self, enemies):
+        if not self.guarding or self.guardHeight <= 0:
+            return
+
+        # Shield Hitbox
+        gw = 8
+        gh = 16
+        gy = self.y
+        if self.facingLeft:
+            gx = self.x - 7
+        else:
+            gx = self.x + 15
+
+        for enemy in enemies:
+            if hasattr(enemy, "bullets"):
+                for b in enemy.bullets:
+                    if not b.is_active:
+                        continue
+                        
+                    # Bullet 8x8 vs Shield 8x16
+                    # Check collision
+                    if (gx < b.x + 8 and gx + gw > b.x and
+                        gy < b.y + 8 and gy + gh > b.y):
+                        
+                        # Reflect only if moving towards the player/shield
+                        if self.facingLeft and b.vx > 0:
+                             b.vx *= -1
+                             b.x += b.vx # Move it a bit to avoid immediate re-collision?
+                        elif not self.facingLeft and b.vx < 0:
+                             b.vx *= -1
+                             b.x += b.vx

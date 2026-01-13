@@ -21,16 +21,21 @@ class Enemy2(Enemy.Enemy):
             self.update_effects()
             return 
 
+        self.update_movement()
+        self.update_shooting()
+        self.update_bullets()
+        super().update(player)
+
+    def update_movement(self):
         self.x += self.vx
-            
         if self.x < self.min_x:
             self.x = self.min_x
             self.vx *= -1
         if self.x > self.max_x:
             self.x = self.max_x
             self.vx *= -1
-            
-        # Shooting logic
+
+    def update_shooting(self):
         self.shoot_timer += 1
         if self.shoot_timer >= self.shoot_interval:
             self.shoot_timer = 0
@@ -38,16 +43,14 @@ class Enemy2(Enemy.Enemy):
             # Bullet vx = self.vx * 2 (faster than enemy)
             b_vx = 2 if self.vx > 0 else -2
             self.bullets.append(EnemyBullet.EnemyBullet(self.x, self.y, b_vx, 0))
-            
-        # Update bullets
+
+    def update_bullets(self):
         new_bullets = []
         for b in self.bullets:
             b.update()
             if b.is_active:
                 new_bullets.append(b)
         self.bullets = new_bullets
-
-        super().update(player)
     
     def draw(self):
         if self.hp > 0:
