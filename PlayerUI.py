@@ -14,7 +14,14 @@ class PlayerUI:
         
     def HPdraw(self):
         for i in range(self.player.hp):
-            pyxel.blt((5 + i * 10) * 2 + 4, 5 * 2 + 4, 0, 0, 32, 8, 8, 0, scale=2.0)
+            # 6 hearts per row
+            row = i // 6
+            col = i % 6
+            
+            x = (5 + col * 10) * 2 + 4
+            draw_y = 5 * 2 + 4 + row * 20 # Add vertical spacing
+            
+            pyxel.blt(x, draw_y, 0, 0, 32, 8, 8, 0, scale=2.0)
 
     def AbilityDraw(self):
         start_x = 300
@@ -31,8 +38,15 @@ class PlayerUI:
         for i, ability_name in enumerate(self.player.playerAbility.acquired_abilities):
             if ability_name in ability_coords:
                 u, v = ability_coords[ability_name]
-                x = start_x - i * spacing
-                pyxel.blt(x, y, 0, u, v, 8, 8, 0, scale=2.0)
+                
+                # Multi-row logic: 7 items per row
+                row = i // 7
+                col = i % 7
+                
+                x = start_x - col * spacing
+                draw_y = y + row * 20 # Add vertical spacing for new rows
+                
+                pyxel.blt(x, draw_y, 0, u, v, 8, 8, 0, scale=2.0)
 
     def FloorDraw(self):
         # Center of screen (320 width -> 160 center)
