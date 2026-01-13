@@ -257,7 +257,7 @@ class Player:
 
     
     def reflect_bullets(self, enemies):
-        if not self.guarding or self.guardHeight <= 0:
+        if not self.guarding or self.guardHeight < 0.1:
             return
 
         # Shield Hitbox

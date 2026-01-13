@@ -25,7 +25,7 @@ class Enemy:
         self.update_effects()
 
         # Guard Collision
-        if player.guarding and self.knockback_vx == 0:
+        if player.guarding and player.guardHeight > 0.1 and self.knockback_vx == 0:
             gx = player.x
             gy = player.y
             gw = 8
