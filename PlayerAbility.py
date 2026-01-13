@@ -31,7 +31,7 @@ class PlayerAbility:
     def __init__(self):
         self.jumpMaxCount = 1
         self.CanDash = False
-        self.CanGuard = True
+        self.CanGuard = False
         self.acquired_abilities = []
         
 
