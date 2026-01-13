@@ -34,7 +34,16 @@ class GameManager:
                 
             if len(self.stage.enemies) == 0:
                 self.currentSceneState = 3
-                selected_abilities = random.sample(PlayerAbility.ability_list, 3)
+                # Filter available abilities
+                available_abilities = []
+                for ability in PlayerAbility.ability_list:
+                    if ability.repeatable or ability.id not in self.player.playerAbility.acquired_abilities:
+                        available_abilities.append(ability)
+                
+                # Sample up to 3 abilities
+                sample_count = min(3, len(available_abilities))
+                selected_abilities = random.sample(available_abilities, sample_count)
+                
                 self.abilitySelectScene.set_options(selected_abilities, self.player)
                 
         elif self.currentSceneState == 2:

@@ -15,6 +15,8 @@ class AbilitySelectScene:
         self.selected_index = 0
 
     def update(self):
+        max_index = max(0, len(self.options) - 1)
+        
         if pyxel.btnp(pyxel.KEY_A):
             self.selected_index -= 1
             if self.selected_index < 0:
@@ -22,8 +24,8 @@ class AbilitySelectScene:
                 
         if pyxel.btnp(pyxel.KEY_D):
             self.selected_index += 1
-            if self.selected_index > 2:
-                self.selected_index = 2
+            if self.selected_index > max_index:
+                self.selected_index = max_index
                 
         if pyxel.btnp(pyxel.KEY_RETURN):
             if self.options and self.player:
@@ -36,8 +38,16 @@ class AbilitySelectScene:
     def draw(self):
         self.writer.draw(105, 40, "ABILITY SELECT", 16, 7)
         
-        # Define box positions
-        box_positions = [(16, 30), (64, 30), (112, 30)]
+        # Define box positions based on number of options
+        box_positions = []
+        num_options = len(self.options)
+        
+        if num_options == 1:
+            box_positions = [(64, 30)] # Center
+        elif num_options == 2:
+            box_positions = [(40, 30), (88, 30)] # Centered pair
+        else:
+            box_positions = [(16, 30), (64, 30), (112, 30)] # Standard 3
         
         # Draw boxes
         for i, pos in enumerate(box_positions):
