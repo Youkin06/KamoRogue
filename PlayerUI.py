@@ -10,6 +10,7 @@ class PlayerUI:
     def draw(self):
         self.HPdraw()
         self.AbilityDraw()
+        self.FloorDraw()
         
     def HPdraw(self):
         for i in range(self.player.hp):
@@ -31,3 +32,19 @@ class PlayerUI:
                 u, v = ability_coords[ability_name]
                 x = start_x - i * spacing
                 pyxel.blt(x, y, 0, u, v, 8, 8, 0, scale=2.0)
+
+    def FloorDraw(self):
+        # Center of screen (320 width -> 160 center)
+        # Image width 16 (scaled by 2 -> 32)
+        # x = 160 - 32/2 = 144
+        x = 144
+        y = 14 # Same as HP
+        
+        # Calculate u based on stage_index
+        # Stage 1: 64, Stage 2: 80 ...
+        u = 64 + (self.player.stage_index - 1) * 16
+        v = 0
+        w = 16
+        h = 8
+        
+        pyxel.blt(x, y, 0, u, v, w, h, 0, scale=2.0)

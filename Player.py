@@ -52,6 +52,9 @@ class Player:
         self.guardMaxHeight = 16.0
         self.guardHeight = 16.0
         
+        # Floor
+        self.stage_index = 1
+        
     def update(self, stage=None):
         self.move(stage)
         self.attack()

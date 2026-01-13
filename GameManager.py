@@ -46,6 +46,7 @@ class GameManager:
                 self.player.x = 80
                 self.player.y = 0
                 self.player.vy = 0
+                self.player.stage_index = 2
 
     def draw(self):
         pyxel.cls(0)
