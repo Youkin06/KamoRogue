@@ -37,7 +37,14 @@ class Enemy1(Enemy.Enemy):
             else:
                 w = 16
             
+            if self.hit_timer > 0:
+                for i in range(1, 16):
+                    pyxel.pal(i, 7) # Change all non-transparent colors to white(7)
+                
             pyxel.blt(self.x * 2 + 8, self.y * 2 + 8, 0, u, 48, w, 16, 0, scale=2.0)
+            
+            if self.hit_timer > 0:
+                pyxel.pal() # Reset palette
         elif self.deathEffectTime < 30:
              u = (self.deathEffectTime // 10) * 16 + 32
              pyxel.blt(self.x * 2 + 8, self.y * 2 + 8, 0, u, 48, 16, 16, 0, scale=2.0)

@@ -10,6 +10,7 @@ class Enemy:
         self.knockback_vx = 0
         self.color = 8
         self.effects = []
+        self.hit_timer = 0
 
     def update(self, player):
         # Knockback Physics
@@ -17,6 +18,9 @@ class Enemy:
         self.knockback_vx *= 0.9
         if abs(self.knockback_vx) < 0.1:
             self.knockback_vx = 0
+
+        if self.hit_timer > 0:
+            self.hit_timer -= 1
 
         self.update_effects()
 
@@ -50,6 +54,7 @@ class Enemy:
             if (self.x + 2 < b.x + 8 and self.x + 14 > b.x and 
                 self.y + 1 < b.y + 8 and self.y + 15 > b.y):
                 self.hp -= 1
+                self.hit_timer = 2
                 b.life = 0
                 
                 FinalX = b.x
