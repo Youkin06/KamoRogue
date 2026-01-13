@@ -23,14 +23,14 @@ def apply_shield(player):
 
 def apply_heart(player):
     player.max_hp += 1
-    player.hp += 1
+    player.hp = player.max_hp
     player.playerAbility.acquired_abilities.append("heart")
 
 ability_list = [
     Ability("ダブルジャンプ", 32, 112, "Wキーを二回押す", apply_double_jump),
     Ability("ダッシュ", 48, 112, "方向キー（ADキー）を二度押す", apply_dash),
     Ability("シールド", 16, 112, "Kキーを押す", apply_shield),
-    Ability("ハート", 64, 112, "HPハートを1つ追加", apply_heart)
+    Ability("ハート", 64, 112, "最大HP+1 & 全回復", apply_heart)
 ]
 
 class PlayerAbility:
