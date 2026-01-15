@@ -7,7 +7,7 @@ class Stage3(Stage.Stage):
         super().__init__()
         self.enemies.append(Enemy1.Enemy1(0, 88))
         
-        self.collision_tiles = []
+        self.collision_tiles = [(2,9),(3,9),(4,9),(6,12),(7,12),(8,12),(9,12),(10,12),(13,7),(14,7),(15,7)]
 
     def draw(self):
         # pyxel.bltm(0, 0, 0, 0, 0, 160, 120, scale=2.0) # bltm does not support scale

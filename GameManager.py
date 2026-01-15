@@ -48,7 +48,10 @@ class GameManager:
                 self.abilitySelectScene.set_options(selected_abilities, self.player)
                 
         elif self.currentSceneState == 2:
-            pass 
+            if pyxel.btnp(pyxel.KEY_R):
+                self.currentSceneState = 0
+                self.player = Player.Player()
+                self.stage = Stage1.Stage1() 
         elif self.currentSceneState == 3:
             if self.abilitySelectScene.update():
                 if self.player.stage_index == 1:
@@ -75,6 +78,7 @@ class GameManager:
             self.player.draw()
             
         elif self.currentSceneState == 2:
-            pyxel.text(120, 100, "GAME OVER", 7)
+            pyxel.text(140, 100, "GAME OVER", 7)
+            pyxel.text(130, 120, "PRESS R TO RESTART", 7)
         elif self.currentSceneState == 3:
             self.abilitySelectScene.draw()
