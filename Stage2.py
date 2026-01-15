@@ -7,7 +7,15 @@ class Stage2(Stage.Stage):
         super().__init__()
         self.enemies.append(Enemy1.Enemy1(0, 88))
         #self.enemies.append(Enemy1.Enemy1(150, 88, 0, 150))
-        
+        # Platform 1: Tiles (5,6) to (7,6)
+        # x range: 5*8=40 to (7+1)*8 - 16 = 48
+        # y: 6*8 - 16 = 32
+        self.enemies.append(Enemy1.Enemy1(5 * 8, 6 * 8 - 16, 5*8 , 5*8 + 8))
+
+        # Platform 2: Tiles (9,10) to (12,10)
+        # x range: 9*8=72 to (12+1)*8 - 16 = 88
+        # y: 10*8 - 16 = 64
+        self.enemies.append(Enemy1.Enemy1(12 * 8, 6 * 8 - 16, 12*8+8 , 17*8-8))
         self.collision_tiles = [(5,6),(6,6),(7,6),(9,10),(10,10),(11,10),(12,10),(14,6),(15,6),(16,6),(17,6)]
 
     def draw(self):

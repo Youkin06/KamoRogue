@@ -2,6 +2,7 @@ import pyxel
 import Enemy
 
 class Enemy1(Enemy.Enemy):
+    #x: 敵の初期X座標, y: 敵の初期Y座標, min_x: 敵の最小X座標, max_x: 敵の最大X座標
     def __init__(self, x, y, min_x=0, max_x=144):
         super().__init__(x, y, 10)#初期位置x,y,HP
         self.vx = 1
