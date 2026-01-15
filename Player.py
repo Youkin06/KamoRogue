@@ -211,7 +211,14 @@ class Player:
             if enemy.hp <= 0:
                 continue
 
-            if (self.x < enemy.x + 14 and self.x + 16 > enemy.x + 2 and self.y < enemy.y + 15 and self.y + 16 > enemy.y + 1):
+            # Custom Hitbox Collision
+            ex = enemy.x + getattr(enemy, 'hitbox_offset_x', 2)
+            ey = enemy.y + getattr(enemy, 'hitbox_offset_y', 1)
+            ew = getattr(enemy, 'hitbox_width', 12)
+            eh = getattr(enemy, 'hitbox_height', 14)
+
+            if (self.x + 4 < ex + ew and self.x + 12 > ex and 
+                self.y + 2 < ey + eh and self.y + 16 > ey):
                 self.hp -= 1
                 self.MutekiTime = 60
                 return

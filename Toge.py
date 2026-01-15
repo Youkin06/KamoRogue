@@ -9,6 +9,14 @@ class Toge(Enemy.Enemy):
         self.fall_speed = 4
         self.u = 8
         self.v = 16
+        # 下なんマスまでか
+        self.detection_range_tile = 7
+        
+        # Hitbox override
+        self.hitbox_offset_x = 4
+        self.hitbox_offset_y = 4
+        self.hitbox_width = 8
+        self.hitbox_height = 8
         
     def update(self, player):
         if self.hp <= 0:
@@ -31,7 +39,7 @@ class Toge(Enemy.Enemy):
                 # Interpreting "within 2 tiles below": distance from bottom of Toge to top of Player is <= 16
                 
                 dist_y = player.y - (self.y + 16)
-                if 0 <= dist_y <= 16:
+                if 0 <= dist_y <= self.detection_range_tile:
                      self.is_falling = True
         else:
             self.y += self.fall_speed

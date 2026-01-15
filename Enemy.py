@@ -11,6 +11,12 @@ class Enemy:
         self.color = 8
         self.effects = []
         self.hit_timer = 0
+        
+        # Hitbox parameters (Default)
+        self.hitbox_offset_x = 2
+        self.hitbox_offset_y = 1
+        self.hitbox_width = 12
+        self.hitbox_height = 14
 
     def update(self, player):
         # Knockback Physics
