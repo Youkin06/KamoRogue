@@ -7,7 +7,7 @@ class Toge(Enemy.Enemy):
         self.initial_y = y
         self.is_falling = False
         self.fall_speed = 4
-        self.u = 48
+        self.u = 8
         self.v = 16
         
     def update(self, player):
@@ -43,6 +43,6 @@ class Toge(Enemy.Enemy):
 
     def draw(self):
         if self.hp > 0:
-            pyxel.blt(self.x * 2, self.y * 2, 0, self.u, self.v, 16, 16, 0, scale=2.0)
+            pyxel.blt(self.x * 2, self.y * 2, 1, self.u, self.v, 16, 16, 0, scale=2.0)
         
         self.draw_effects()
