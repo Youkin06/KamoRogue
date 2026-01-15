@@ -6,7 +6,9 @@ import Enemy2
 class Stage3(Stage.Stage):
     def __init__(self):
         super().__init__()
-        self.enemies.append(Enemy1.Enemy1(0, 88, 0, 6 * 8 -16))
+        self.player_start_x = 1 * 16
+        self.player_start_y = 12 * 16
+        #self.enemies.append(Enemy1.Enemy1(0, 88, 0, 6 * 8 -16))
         self.enemies.append(Enemy2.Enemy2(8* 10 + 16, 88, 8* 10 +8, 15* 12 - 32))
         self.enemies.append(Enemy2.Enemy2(2 * 8, 9* 7 -8, 2*8, 4*8))
         

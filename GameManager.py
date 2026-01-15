@@ -25,6 +25,8 @@ class GameManager:
         if self.currentSceneState == 0:
             if pyxel.btnp(pyxel.KEY_RETURN):
                 self.currentSceneState = 1
+                self.player.x = self.stage.player_start_x
+                self.player.y = self.stage.player_start_y
                 
         elif self.currentSceneState == 1:
             self.player.update(self.stage)
@@ -52,7 +54,11 @@ class GameManager:
             if pyxel.btnp(pyxel.KEY_R):
                 self.currentSceneState = 0
                 self.player = Player.Player()
-                self.stage = Stage1.Stage1() 
+                self.currentSceneState = 0
+                self.player = Player.Player()
+                self.stage = Stage1.Stage1()
+                self.player.x = self.stage.player_start_x
+                self.player.y = self.stage.player_start_y 
         elif self.currentSceneState == 3:
             if self.abilitySelectScene.update():
                 if self.player.stage_index == 1:
@@ -66,8 +72,9 @@ class GameManager:
                      self.player.stage_index = 4
                 
                 self.currentSceneState = 1
-                self.player.x = 80
-                self.player.y = 0
+                self.player.x = self.stage.player_start_x
+                self.player.y = self.stage.player_start_y
+                
                 self.player.vy = 0
 
     def draw(self):

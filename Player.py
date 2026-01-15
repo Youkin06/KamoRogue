@@ -147,8 +147,12 @@ class Player:
                         self.vy = 0
         
         # Simple floor collision
-        if self.y > 88:
-            self.y = 88
+        floor_limit = 88
+        if stage:
+            floor_limit = stage.floor_y
+
+        if self.y > floor_limit:
+            self.y = floor_limit
             self.vy = 0
             self.is_grounded = True
             self.jumpCount = 0

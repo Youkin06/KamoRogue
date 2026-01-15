@@ -5,7 +5,10 @@ import Enemy1
 class Stage2(Stage.Stage):
     def __init__(self):
         super().__init__()
-        self.enemies.append(Enemy1.Enemy1(0, 88))
+
+        self.player_start_x = 1 * 16
+        self.player_start_y = 12 * 16
+        self.enemies.append(Enemy1.Enemy1(60, 88, 60, 150-8))
         #self.enemies.append(Enemy1.Enemy1(150, 88, 0, 150))
         # Platform 1: Tiles (5,6) to (7,6)
         # x range: 5*8=40 to (7+1)*8 - 16 = 48

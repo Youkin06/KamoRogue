@@ -4,6 +4,9 @@ class Stage:
     def __init__(self):
         self.enemies = []
         self.collision_tiles = []
+        self.player_start_x = 80
+        self.player_start_y = 0
+        self.floor_y = 88
 
     def update(self, player):
         new_enemies = []
