@@ -30,7 +30,7 @@ def apply_heart(player):
 
 ability_list = [
     Ability("double_jump", "ダブルジャンプ", 32, 112, "Wキーを二回押す", apply_double_jump),
-    Ability("dash", "ダッシュ", 48, 112, "方向キー（ADキー）を二度押す", apply_dash),
+    Ability("dash", "ダッシュ", 48, 112, "方向キー（ADキー）を\n二度押す", apply_dash),
     Ability("shield", "シールド", 16, 112, "Kキーを押す", apply_shield),
     Ability("heart", "ハート", 64, 112, "最大HP+1 & 全回復", apply_heart, repeatable=True)
 ]

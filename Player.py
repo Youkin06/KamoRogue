@@ -37,6 +37,7 @@ class Player:
         self.facingLeft = False
         
         #攻撃attack
+        self.attack_power = 1
         self.bullets = []
         self.Bullet = Bullet.Bullet
         
@@ -160,7 +161,7 @@ class Player:
         self.bullets = new_bullets
 
         if pyxel.btnp(pyxel.KEY_J):
-            self.bullets.append(self.Bullet(self.x, self.y, self.facingLeft))
+            self.bullets.append(self.Bullet(self.x, self.y, self.facingLeft, self.attack_power))
 
     def guard(self):
         if pyxel.btn(pyxel.KEY_K) and self.playerAbility.CanGuard == True:

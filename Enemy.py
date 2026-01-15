@@ -53,7 +53,7 @@ class Enemy:
             # Bullet 8x8 vs Enemy 12x14 (Offset 2, 1)
             if (self.x + 2 < b.x + 8 and self.x + 14 > b.x and 
                 self.y + 1 < b.y + 8 and self.y + 15 > b.y):
-                self.hp -= 1
+                self.hp -= b.damage
                 self.hit_timer = 2
                 b.life = 0
                 

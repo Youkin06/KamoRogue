@@ -8,10 +8,10 @@ class Stage1(Stage.Stage):
         super().__init__()
         self.enemies.append(Enemy1.Enemy1(0, 88))
         #self.enemies.append(Enemy1.Enemy1(150, 88, 0, 150))
-        #self.enemies.append(Enemy2.Enemy2(150, 88, 0, 150))
+        self.enemies.append(Enemy2.Enemy2(150, 88, 0, 150))
         
         # Add collision tiles
-        self.collision_tiles = [(4, 10), (5, 10), (6, 10), (7, 10),(12,5),(13,5),(14,5),(15,5)]
+        self.collision_tiles = [(4, 10), (5, 10), (6, 10), (7, 10)]
 
     def draw(self):
         # pyxel.bltm(0, 0, 0, 0, 0, 160, 120, scale=2.0) # bltm does not support scale

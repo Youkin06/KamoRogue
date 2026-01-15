@@ -35,6 +35,15 @@ class AbilitySelectScene:
                 return True
         return False
 
+    def get_text_width(self, text):
+        width = 0
+        for char in text:
+            if ord(char) < 256:
+                width += 4
+            else:
+                width += 8
+        return width
+
     def draw(self):
         self.writer.draw(105, 40, "ABILITY SELECT", 16, 7)
         
@@ -74,16 +83,17 @@ class AbilitySelectScene:
                 
                 # Draw Ability Name (y=66 -> 132)
                 name = ability.name
-                # Centering for 8px font in 64px box:
-                # TextWidth = len(name) * 8 (approx)
-                # Start = draw_x + 32 - (len * 4)
-                name_draw_x = draw_x + 32 - (len(name) * 4)
+                # Centering
+                name_width = self.get_text_width(name)
+                name_draw_x = draw_x + 32 - (name_width // 2)
                 self.writer.draw(name_draw_x, 132, name, 8, 7)
                 
                 # Draw Ability Description (y=74 -> 148)
                 desc = ability.description
-                desc_draw_x = draw_x + 32 - (len(desc) * 4)
-                self.writer.draw(desc_draw_x, 148, desc, 8, 7)
+                for i, line in enumerate(desc.split('\n')):
+                    line_width = self.get_text_width(line)
+                    desc_draw_x = draw_x + 32 - (line_width // 2)
+                    self.writer.draw(desc_draw_x, 148 + i * 10, line, 8, 7)
 
         # Draw Controls (y=100 -> 200)
         # Left Control W=16 -> Offset +8

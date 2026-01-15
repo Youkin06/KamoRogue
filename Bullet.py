@@ -1,9 +1,10 @@
 import pyxel
 
 class Bullet:
-    def __init__(self, x, y, facingLeft):
+    def __init__(self, x, y, facingLeft, damage=1):
         self.x = x 
         self.y = y + 5
+        self.damage = damage
         self.facingLeft = facingLeft
         if facingLeft:
             self.x += -2 #初期ショット位置調整
