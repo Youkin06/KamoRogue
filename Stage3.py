@@ -1,11 +1,13 @@
 import pyxel
 import Stage
 import Enemy1
+import Enemy2
 
 class Stage3(Stage.Stage):
     def __init__(self):
         super().__init__()
-        self.enemies.append(Enemy1.Enemy1(0, 88))
+        self.enemies.append(Enemy1.Enemy1(0, 88, 0, 6 * 8 -16))
+        self.enemies.append(Enemy2.Enemy2(8* 10 + 16, 88, 8* 10 +8, 15* 12 - 32))
         
         self.collision_tiles = [(2,9),(3,9),(4,9),(6,12),(7,12),(8,12),(9,12),(10,12),(13,7),(14,7),(15,7)]
 
