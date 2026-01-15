@@ -4,7 +4,7 @@ import EnemyBullet
 
 class Enemy2(Enemy.Enemy):
     def __init__(self, x, y, min_x=0, max_x=144):
-        super().__init__(x, y, 13)#初期位置x,y,HP
+        super().__init__(x, y, 1)#初期位置x,y,HP
         self.vx = 1
         self.min_x = min_x
         self.max_x = max_x

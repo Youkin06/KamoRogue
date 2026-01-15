@@ -10,8 +10,8 @@ class Stage4(Stage.Stage):
         #self.enemies.append(Toge.Toge(40, 40))
         self.enemies.append(Toge.Toge(120, 60))
         
-        self.player_start_x = 60
-        self.player_start_y = 12 * 16
+        self.player_start_x = 16
+        self.player_start_y = 88
         self.floor_y = 240
         
         self.collision_tiles = [(61-60, 10),(62-60,10),(63-60,10),(64-60,10),(65-60,10),(66-60,10),(67-60,10),(68-60,10),(69-60,10),(70-60,10),(71-60,10),(72-60,10),(73-60,10),(74-60,10),
