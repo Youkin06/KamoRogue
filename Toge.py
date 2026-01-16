@@ -40,8 +40,9 @@ class Toge(Enemy.Enemy):
         else:
             self.y += self.fall_speed
             
-            # Simple floor/out of bounds check could be added, but user didn't request.
-            # It will just keep falling forever or until hit.
+            # Remove if falls off screen (assumed bottom is 240)
+            if self.y > 240:
+                self.hp = 0
             
         super().update_effects()
 

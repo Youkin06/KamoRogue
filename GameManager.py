@@ -4,6 +4,7 @@ import Stage1
 import Stage2
 import Stage3
 import Stage4
+import Stage5
 import AbilitySelectScene
 import random
 import PlayerAbility
@@ -70,6 +71,9 @@ class GameManager:
                 elif self.player.stage_index == 3:
                      self.stage = Stage4.Stage4()
                      self.player.stage_index = 4
+                elif self.player.stage_index == 4:
+                     self.stage = Stage5.Stage5()
+                     self.player.stage_index = 5
                 
                 self.currentSceneState = 1
                 self.player.x = self.stage.player_start_x
