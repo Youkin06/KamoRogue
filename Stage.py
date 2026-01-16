@@ -7,6 +7,8 @@ class Stage:
         self.player_start_x = 80
         self.player_start_y = 0
         self.floor_y = 88
+        self.limit_x_min = 0
+        self.limit_x_max = 144 # 160 - 16
 
     def update(self, player):
         new_enemies = []

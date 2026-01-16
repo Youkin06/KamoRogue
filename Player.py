@@ -117,10 +117,16 @@ class Player:
                         self.x = tx + 8
             
         # Screen bounds
-        if self.x < 0:
-            self.x = 0
-        if self.x > 160 - 16:
-            self.x = 160 - 16
+        if stage:
+            if self.x < stage.limit_x_min:
+                self.x = stage.limit_x_min
+            if self.x > stage.limit_x_max:
+                self.x = stage.limit_x_max
+        else:
+            if self.x < 0:
+                self.x = 0
+            if self.x > 160 - 16:
+                self.x = 160 - 16
             
         if pyxel.btnp(pyxel.KEY_W) and self.is_grounded and self.jumpCount < self.playerAbility.jumpMaxCount:
             self.vy = self.jump_strength

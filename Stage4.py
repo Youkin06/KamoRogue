@@ -2,10 +2,14 @@ import pyxel
 import Stage
 import Enemy1
 import Toge
+import Player
 
 class Stage4(Stage.Stage):
     def __init__(self):
         super().__init__()
+        self.limit_x_min = 0+8
+        self.limit_x_max = 144-8
+
         self.enemies.append(Enemy1.Enemy1(60, 88, 60, 150-8))
         #self.enemies.append(Toge.Toge(40, 40))
         self.enemies.append(Toge.Toge(120, 60))
