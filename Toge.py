@@ -2,7 +2,7 @@ import pyxel
 import Enemy
 
 class Toge(Enemy.Enemy):
-    def __init__(self, x, y):
+    def __init__(self, x, y, detection_range_tile=2):
         super().__init__(x, y, 1) # HP=1
         self.initial_y = y
         self.is_falling = False
@@ -10,9 +10,8 @@ class Toge(Enemy.Enemy):
         self.u = 8
         self.v = 16
         # 下なんマスまでか
-        self.detection_range_tile = 8
+        self.detection_range_tile = detection_range_tile
         
-        # Hitbox override
         # Hitbox override
         self.hitbox_offset_x = -2
         self.hitbox_offset_y = -2
@@ -34,9 +33,9 @@ class Toge(Enemy.Enemy):
             # X Detection: 
             # 8px width.
             if abs(my_cx - player_cx) < 6: 
-                # Y Detection: 3 tiles (24px)
+                # Y Detection: Use detection_range_tile * 8 (pixels per tile)
                 dist_y = player.y - (self.y + 8)
-                if 0 <= dist_y <= 24: # 3 tiles
+                if 0 <= dist_y <= self.detection_range_tile * 8:
                      self.is_falling = True
         else:
             self.y += self.fall_speed
@@ -61,7 +60,7 @@ class Toge(Enemy.Enemy):
             range_x = (self.x + 2 - 6) * 2 
             range_y = (self.y + 8) * 2
             range_w = (6 * 2) * 2
-            range_h = 24 * 2
+            range_h = (self.detection_range_tile * 8) * 2
             
             pyxel.rectb(range_x, range_y, range_w, range_h, 10) # 10 = Yellow
         

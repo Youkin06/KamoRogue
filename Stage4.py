@@ -12,8 +12,8 @@ class Stage4(Stage.Stage):
 
         self.enemies.append(Enemy1.Enemy1(60, 88, 60, 150-8))
         #self.enemies.append(Toge.Toge(40, 40))
-        self.enemies.append(Toge.Toge(120, 60))
-        self.enemies.append(Toge.Toge(3*8+8,4*8+4))
+        self.enemies.append(Toge.Toge(120, 60-2))
+        self.enemies.append(Toge.Toge(3*8+8,4*8+4-2,4))
         
         self.player_start_x = 16
         self.player_start_y = 88
