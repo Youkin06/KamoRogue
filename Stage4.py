@@ -1,6 +1,7 @@
 import pyxel
 import Stage
 import Enemy1
+import Enemy2
 import Toge
 import Player
 
@@ -11,6 +12,8 @@ class Stage4(Stage.Stage):
         self.limit_x_max = 144-8
 
         self.enemies.append(Enemy1.Enemy1(60, 88, 60, 150-8))
+        self.enemies.append(Enemy2.Enemy2(16, 64, 16, 60))
+        self.enemies.append(Enemy2.Enemy2(16, 40-8, 60, 150-8))
         #self.enemies.append(Toge.Toge(40, 40))
         self.enemies.append(Toge.Toge(120, 60-2))
         self.enemies.append(Toge.Toge(3*8+8,4*8+4-2,4))
