@@ -10,11 +10,12 @@ class Toge(Enemy.Enemy):
         self.u = 8
         self.v = 16
         # 下なんマスまでか
-        self.detection_range_tile = 7
+        self.detection_range_tile = 8
         
         # Hitbox override
-        self.hitbox_offset_x = 4
-        self.hitbox_offset_y = 4
+        # Hitbox override
+        self.hitbox_offset_x = -2
+        self.hitbox_offset_y = -2
         self.hitbox_width = 8
         self.hitbox_height = 8
         
@@ -24,22 +25,18 @@ class Toge(Enemy.Enemy):
 
         if not self.is_falling:
             # Detection logic
-            # Player is below and within horizontal range
-            # Toge width 16, Player width 16. check overlap.
+            # Toge is 8x8. Center is x + 4.
+            # Player is 16x16. Center is x + 8.
             
-            # center x
-            my_cx = self.x + 8
+            my_cx = self.x + 2
             player_cx = player.x + 8
             
-            if abs(my_cx - player_cx) < 12: # Check horizontal alignment approx
-                # Check vertical
-                # Player should be below (player.y > self.y)
-                # And within 2 tiles (16px) distance? "下に2マスまでしか検知しない"
-                # so distance < 32 (16 height of Toge + 16 gap + 16 player height?)
-                # Interpreting "within 2 tiles below": distance from bottom of Toge to top of Player is <= 16
-                
-                dist_y = player.y - (self.y + 16)
-                if 0 <= dist_y <= self.detection_range_tile:
+            # X Detection: 
+            # 8px width.
+            if abs(my_cx - player_cx) < 6: 
+                # Y Detection: 3 tiles (24px)
+                dist_y = player.y - (self.y + 8)
+                if 0 <= dist_y <= 24: # 3 tiles
                      self.is_falling = True
         else:
             self.y += self.fall_speed
@@ -51,6 +48,21 @@ class Toge(Enemy.Enemy):
 
     def draw(self):
         if self.hp > 0:
-            pyxel.blt(self.x * 2, self.y * 2, 1, self.u, self.v, 16, 16, 0, scale=2.0)
+            pyxel.blt(self.x * 2, self.y * 2, 1, self.u, self.v, 8, 8, 0, scale=2.0)
+            
+            # Debug: Draw Hitbox (Red)
+            hx = (self.x + self.hitbox_offset_x) * 2
+            hy = (self.y + self.hitbox_offset_y) * 2
+            hw = self.hitbox_width * 2
+            hh = self.hitbox_height * 2
+            pyxel.rectb(hx, hy, hw, hh, 8) # 8 = Red
+            
+            # Debug: Draw Detection Range (Yellow)
+            range_x = (self.x + 2 - 6) * 2 
+            range_y = (self.y + 8) * 2
+            range_w = (6 * 2) * 2
+            range_h = 24 * 2
+            
+            pyxel.rectb(range_x, range_y, range_w, range_h, 10) # 10 = Yellow
         
         self.draw_effects()
