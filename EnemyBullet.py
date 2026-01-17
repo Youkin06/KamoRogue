@@ -7,7 +7,7 @@ class EnemyBullet:
         self.vx = vx
         self.vy = vy
         self.img_v = img_v
-        self.life = 60 # Time to live in frames (optional cleanup)
+        self.life = 60 # 生存期間（フレーム数）
         self.is_active = True
         self.animation_frame = 0
 
@@ -17,7 +17,7 @@ class EnemyBullet:
         self.life -= 1
         self.animation_frame += 1
         
-        # Screen bounds check (optional, but good practice)
+        # 画面外チェック (オプションだが、良い習慣)
         if self.x < -8 or self.x > 320 or self.life <= 0:
             self.is_active = False
 
@@ -25,8 +25,8 @@ class EnemyBullet:
         if not self.is_active:
             return
             
-        # Animation: (0,144) -> (8,144) -> (16,144)
-        # Cycle every few frames? User didn't specify speed. Standard 4-6 frames?
+        # アニメーション: (0,144) -> (8,144) -> (16,144)
+        # 数フレームごとにサイクル？ユーザー指定なし。標準4-6フレーム？
         cycle = (self.animation_frame // 4) % 3
         u = cycle * 8
         v = self.img_v

@@ -13,7 +13,7 @@ class Toge(Enemy.Enemy):
         self.detection_range_tile = detection_range_tile
         self.is_active = True
         
-        # Hitbox override
+        # 当たり判定のオーバーライド
         self.hitbox_offset_x = -2
         self.hitbox_offset_y = -2
         self.hitbox_width = 8
@@ -24,24 +24,24 @@ class Toge(Enemy.Enemy):
             return
 
         if not self.is_falling:
-            # Detection logic
-            # Toge is 8x8. Center is x + 4.
-            # Player is 16x16. Center is x + 8.
+            # 検知ロジック
+            # Togeは8x8。中心は x + 4。
+            # Playerは16x16。中心は x + 8。
             
             my_cx = self.x + 2
             player_cx = player.x + 8
             
-            # X Detection: 
-            # 8px width.
+            # X軸検知: 
+            # 8pxの幅。
             if abs(my_cx - player_cx) < 6: 
-                # Y Detection: Use detection_range_tile * 8 (pixels per tile)
+                # Y軸検知: detection_range_tile * 8 (1タイルあたりのピクセル数) を使用
                 dist_y = player.y - (self.y + 8)
                 if 0 <= dist_y <= self.detection_range_tile * 8:
                      self.is_falling = True
         else:
             self.y += self.fall_speed
             
-            # Remove if falls off screen (assumed bottom is 240)
+            # 削除用
             if self.y > 240:
                 self.hp = 0
             
@@ -51,7 +51,7 @@ class Toge(Enemy.Enemy):
         if self.hp > 0:
             pyxel.blt(self.x * 2, self.y * 2, 1, self.u, self.v, 8, 8, 0, scale=2.0)
             
-            # Debug lines
-            pyxel.rectb(self.x * 2 - 8, self.y * 2, 8 + 16, self.detection_range_tile * 16, 8)
+            # Debug 用
+            #pyxel.rectb(self.x * 2 - 8, self.y * 2, 8 + 16, self.detection_range_tile * 16, 8)
         
         self.draw_effects()

@@ -72,7 +72,7 @@ class Player:
     def move(self, stage=None):
         self.key_timer += 1
         
-        # Dash Left
+        # 左ダッシュ
         if pyxel.btnp(pyxel.KEY_A):
             if self.last_key == pyxel.KEY_A and self.key_timer < 10 and self.playerAbility.CanDash == True:
                 self.zanzou.append(self.Zanzou(self.x, self.y, 32, 0, True, 5))
@@ -82,7 +82,7 @@ class Player:
             self.last_key = pyxel.KEY_A
             self.key_timer = 0
             
-        # Dash Right    
+        # 右ダッシュ    
         if pyxel.btnp(pyxel.KEY_D):
             if self.last_key == pyxel.KEY_D and self.key_timer < 10 and self.playerAbility.CanDash == True:
                 self.zanzou.append(self.Zanzou(self.x, self.y, 32, 0, False, 5))
@@ -92,7 +92,7 @@ class Player:
             self.last_key = pyxel.KEY_D
             self.key_timer = 0
             
-        # Horizontal Movement
+        # 水平移動
         vx = 0
         if pyxel.btn(pyxel.KEY_A):
             vx = -self.speed
@@ -104,19 +104,19 @@ class Player:
         
         self.x += vx
         
-        # Horizontal Collision with Stage
+        # ステージとの水平衝突判定
         if stage:
             for tile in stage.collision_tiles:
                 tx, ty = tile[0] * 8, tile[1] * 8
                 if (self.x < tx + 8 and self.x + 16 > tx and
                     self.y < ty + 8 and self.y + 16 > ty):
-                    # Collision detected
-                    if vx > 0: # Moving Right
+                    # 衝突検知
+                    if vx > 0: # 右移動中
                         self.x = tx - 16
-                    elif vx < 0: # Moving Left
+                    elif vx < 0: # 左移動中
                         self.x = tx + 8
             
-        # Screen bounds
+        # 画面端の制限
         if stage:
             if self.x < stage.limit_x_min:
                 self.x = stage.limit_x_min
@@ -136,23 +136,23 @@ class Player:
         self.vy += self.gravity
         self.y += self.vy
         
-        # Vertical Collision with Stage
+        # ステージとの垂直衝突判定
         if stage:
             for tile in stage.collision_tiles:
                 tx, ty = tile[0] * 8, tile[1] * 8
                 if (self.x < tx + 8 and self.x + 16 > tx and
                     self.y < ty + 8 and self.y + 16 > ty):
                     # Collision detected
-                    if self.vy > 0: # Falling
+                    if self.vy > 0: # 落下中
                         self.y = ty - 16
                         self.vy = 0
                         self.is_grounded = True
                         self.jumpCount = 0
-                    elif self.vy < 0: # Jumping up
+                    elif self.vy < 0: # 上昇中
                         self.y = ty + 8
                         self.vy = 0
         
-        # Simple floor collision
+        # 単純な床判定
         if self.y > 88:
             self.y = 88
             self.vy = 0
@@ -201,11 +201,11 @@ class Player:
             return
 
         for enemy in enemies:
-            # Check collision with enemy bullets
+            # 敵の弾との衝突判定
             if hasattr(enemy, "bullets"):
                 for b in enemy.bullets:
-                    # Bullet 8x8 vs Player 16x16
-                    # Use slightly smaller hitboxes for better feel
+                    # 弾 8x8 vs プレイヤー 16x16
+                    # 操作感を良くするために当たり判定を少し小さくする
                     if (b.is_active and 
                         self.x < b.x + 6 and self.x + 16 > b.x + 2 and
                         self.y < b.y + 6 and self.y + 16 > b.y + 2):
@@ -218,7 +218,7 @@ class Player:
             if enemy.hp <= 0:
                 continue
 
-            # Custom Hitbox Collision
+            # カスタムヒットボックス判定
             ex = enemy.x + getattr(enemy, 'hitbox_offset_x', 2)
             ey = enemy.y + getattr(enemy, 'hitbox_offset_y', 1)
             ew = getattr(enemy, 'hitbox_width', 12)
@@ -278,7 +278,7 @@ class Player:
         if not self.guarding or self.guardHeight < 0.1:
             return
 
-        # Shield Hitbox
+        # 盾のヒットボックス
         gw = 8
         gh = 16
         gy = self.y
@@ -293,15 +293,15 @@ class Player:
                     if not b.is_active:
                         continue
                         
-                    # Bullet 8x8 vs Shield 8x16
-                    # Check collision
+                    # 弾 8x8 vs 盾 8x16
+                    # 衝突判定
                     if (gx < b.x + 8 and gx + gw > b.x and
                         gy < b.y + 8 and gy + gh > b.y):
                         
-                        # Reflect only if moving towards the player/shield
+                        # プレイヤー/盾に向かって移動している場合のみ反射する
                         if self.facingLeft and b.vx > 0:
                              b.vx *= -1
-                             b.x += b.vx # Move it a bit to avoid immediate re-collision?
+                             b.x += b.vx # 即時の再衝突を防ぐために少し移動させる
                         elif not self.facingLeft and b.vx < 0:
                              b.vx *= -1
                              b.x += b.vx

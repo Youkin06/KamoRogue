@@ -6,7 +6,7 @@ import random
 
 class Enemy3(Enemy.Enemy):
     def __init__(self, x, y, min_x=0, max_x=144):
-        super().__init__(x, y, 10) # HP 10
+        super().__init__(x, y, 50) # HP 10
         self.vx = 0
         self.vy = 0
         self.gravity = 1
@@ -38,21 +38,17 @@ class Enemy3(Enemy.Enemy):
         super().update(player)
 
     def update_movement(self, player):
-        # Face Player
+        # プレイヤーの方を向く
         if player.x < self.x:
             self.facingLeft = True
         else:
             self.facingLeft = False
             
-        # Gravity
+        # 重力
         self.vy += self.gravity
         self.y += self.vy
         
-        # Ground Collision (Simple floor at 88 like others or generic?)
-        # Enemy1/2 don't have gravity, but Enemy3 needs it for jumping.
-        # Assuming floor is at y=88 for now as per Player.py logic, or just stay on platform?
-        # User didn't specify platform logic for enemies, but "jump" implies gravity.
-        # I'll implement simple floor collision at y=88 for now.
+        #ゆか
         if self.y > 88:
             self.y = 88
             self.vy = 0
@@ -60,9 +56,9 @@ class Enemy3(Enemy.Enemy):
         else:
             self.on_ground = False
             
-        # Jump randomly
-        if self.on_ground and random.randint(0, 100) < 5: # 2% chance per frame
-            self.vy = -7 # Jump strength
+        # ランダムジャンプ
+        if self.on_ground and random.randint(0, 100) < 5: 
+            self.vy = -7 # ジャンプパワー
             self.on_ground = False
 
     def update_shooting(self, player):
@@ -72,8 +68,7 @@ class Enemy3(Enemy.Enemy):
         self.shoot_timer += 1
         if self.shoot_timer >= self.shoot_interval:
             self.shoot_timer = 0
-            # Fire towards player
-            # Simple horizontal aim: if facing left, shoot left.
+            # プレイヤー方向向く
             b_vx = -2 if self.facingLeft else 2
             self.bullets.append(EnemyBullet.EnemyBullet(self.x, self.y, b_vx, 0, img_v=232))
 
@@ -82,20 +77,19 @@ class Enemy3(Enemy.Enemy):
             self.summon_timer -= 1
             if self.summon_timer <= 0:
                 self.is_summoning = False
-                # Spawn Toge
-                spawn_x = random.randint(8, 150)
+                # Toge生成
+                spawn_x = player.x + random.randint(-10, 10)
                 print("spawn_x: "+ str(spawn_x))
                 self.bullets.append(Toge.Toge(spawn_x, 16, detection_range_tile=30))
         else:
+            #とげ生成状態
             self.toge_timer += 1
             if self.toge_timer > 120:
                 self.toge_timer = 0
                 self.is_summoning = True
-                self.summon_timer = 60 # Animation duration (adjust as needed, user didn't specify duration, default to 60 or 30?)
-                # User said "casting state". I'll use 60 frames for clear visibility.
-
-        # Old Toge Spawning removed
-        # self.toge_timer += 1 ...
+                self.is_summoning = True
+                self.summon_timer = 60 
+                
 
     def update_bullets(self, player):
         new_bullets = []
@@ -126,15 +120,15 @@ class Enemy3(Enemy.Enemy):
                 u = (pyxel.frame_count // 6 % 2) * 16
                 w = 16
                 if self.facingLeft:
-                    w = -16 # Flip to face Left
+                    w = -16 
                 else:
-                    w = 16 # Default face Right
+                    w = 16 
                 
                 if self.hit_timer > 0:
                     for i in range(1, 16):
                         pyxel.pal(i, 7)
                     
-                # Sprite at (0, 216)
+                # スプライト位置 (0, 216)
                 pyxel.blt(self.x * 2 + 8, self.y * 2 + 8, 0, u, 216, w, 16, 0, scale=2.0)
                 
                 if self.hit_timer > 0:

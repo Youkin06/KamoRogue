@@ -26,22 +26,22 @@ class GameManager:
         self.howToPlayScene = HowToPlayScene.HowToPlayScene()
         self.currentSceneState = 0 # 0: Title, 1: Game, 2: Result, 3: AbilitySelect, 4: HowToPlay
         
-        self.title_y = -64 # Start off-screen
+        self.title_y = -64 # 画面外から開始
         
         pyxel.run(self.update, self.draw)
 
     def update(self):
         if self.currentSceneState == 0:
             if self.title_y < 88:
-                self.title_y += 4 # Animation speed
+                self.title_y += 4 # アニメーション速度
             
             if pyxel.btnp(pyxel.KEY_RETURN):
-                self.title_y = 88 # Ensure finished if skipped? Or just proceed
-                self.currentSceneState = 4 # Go to HowToPlay
+                self.title_y = 88 # スキップされた場合は完了状態にする
+                self.currentSceneState = 4 # 遊び方画面へ
                 
         elif self.currentSceneState == 4:
             if self.howToPlayScene.update():
-                self.currentSceneState = 1 # Go to Game
+                self.currentSceneState = 1 # ゲーム画面へ
                 self.player.x = self.stage.player_start_x
                 self.player.y = self.stage.player_start_y
                 
@@ -55,13 +55,13 @@ class GameManager:
                 
             if len(self.stage.enemies) == 0:
                 self.currentSceneState = 3
-                # Filter available abilities
+                # 利用可能な能力をフィルタリング
                 available_abilities = []
                 for ability in PlayerAbility.ability_list:
                     if ability.repeatable or ability.id not in self.player.playerAbility.acquired_abilities:
                         available_abilities.append(ability)
                 
-                # Sample up to 3 abilities
+                # 最大3つの能力をサンプリング
                 sample_count = min(3, len(available_abilities))
                 selected_abilities = random.sample(available_abilities, sample_count)
                 
@@ -70,7 +70,7 @@ class GameManager:
         elif self.currentSceneState == 2:
             if pyxel.btnp(pyxel.KEY_R):
                 self.currentSceneState = 0
-                self.title_y = -64 # Reset animation
+                self.title_y = -64 # アニメーションをリセット
                 self.player = Player.Player()
                 self.currentSceneState = 0
                 self.player = Player.Player()
@@ -100,7 +100,7 @@ class GameManager:
 
         
     def TitleDraw(self):
-         # Draw Background (Tilemap 0, Start x=0, y=16)
+         # 背景を描画 (タイルマップ 0, 開始 x=0, y=16)
         base_ty = 16
         for ty in range(15):
             for tx in range(20):
@@ -113,7 +113,7 @@ class GameManager:
         # x = 114 (79+35), y = self.title_y
         pyxel.blt(114, self.title_y, 0, 0, 184, 81, 32, 0, scale=2.0)
         
-        # Only show text if animation finished (optional, but looks cleaner) or just always
+        # アニメーション完了後にテキストを表示 (オプションだが、その方が綺麗) あるいは常に表示
         if self.title_y >= 88:
             #pyxel.text(90, 160, "PRESS ENTER TO START", 7)
             #Enterキー

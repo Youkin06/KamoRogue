@@ -4,9 +4,9 @@ import sys
 
 class App:
     def __init__(self):
-        pyxel.init(160, 120, display_scale=1) # Minimal window
+        pyxel.init(160, 120, display_scale=1) # 最小ウィンドウ
         pyxel.images[0].set(0, 0, ["00000000", "00000000", "00111100", "01000010", "01000010", "00111100", "00000000", "00000000"])
-        # Run one frame then exit
+        # 1フレーム実行して終了
         pyxel.run(self.update, self.draw)
 
     def update(self):

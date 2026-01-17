@@ -3,9 +3,9 @@ import pyxel
 
 class App:
     def __init__(self):
-        # 32x32 window
+        # 32x32 ウィンドウ
         pyxel.init(32, 32)
-        # Create a single white pixel image
+        # 単一の白いピクセル画像を作成
         pyxel.images[0].set(0, 0, ["1"])
         pyxel.run(self.update, self.draw)
 
@@ -14,26 +14,26 @@ class App:
 
     def draw(self):
         pyxel.cls(0)
-        # Draw 1x1 pixel at 10,10. Scaled 10x.
-        # w=1, h=1. Center 10.5, 10.5?
-        # If Pyxel uses center (x+w/2), for w=1, is it integer division? 10+0 = 10?
-        # Or float?
-        # Let's try w=2, h=2. At 10,10.
-        # Center 11,11.
-        # Scale 2.0. Result 4x4.
-        # Should be centered at 11,11.
-        # TopLeft: 11 - 2 = 9.
-        # Original TopLeft: 10.
-        # Shift: -1. (w/2 * (scale-1)) = 1 * 1 = 1.
+        # 10,10に1x1ピクセルを描画。10倍スケーリング。
+        # w=1, h=1. 中心 10.5, 10.5?
+        # Pyxelが中心(x+w/2)を使用する場合、w=1では整数除算か？ 10+0 = 10？
+        # それとも浮動小数点？
+        # w=2, h=2を試す。位置10,10。
+        # 中心 11,11。
+        # スケール 2.0。結果 4x4。
+        # 11,11を中心にすべき。
+        # 左上: 11 - 2 = 9。
+        # 元の左上: 10。
+        # ずらし: -1。 (w/2 * (scale-1)) = 1 * 1 = 1。
         
-        # Test 1: Draw w=8, h=8 at 0,0. Scale 1 (White)
+        # テスト 1: w=8, h=8 を 0,0 に描画。スケール 1 (白)
         pyxel.rectb(0, 0, 8, 8, 7)
         
-        # Test 2: Draw w=8, h=8 at 0,16. Scale 2 (Red)
-        # Expected: Shifted by -4? So starts at -4, 12?
+        # テスト 2: w=8, h=8 を 0,16 に描画。スケール 2 (赤)
+        # 期待値: -4ずれる？ つまり -4, 12 から開始？
         pyxel.blt(0, 16, 0, 0, 0, 8, 8, 8, scale=2.0)
         
-        # Mark logical Top-Left (0, 16) with Green dot
+        # 論理的な左上 (0, 16) を緑の点でマーク
         pyxel.pset(0, 16, 11)
 
 App()

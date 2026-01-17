@@ -13,12 +13,12 @@ class Stage1(Stage.Stage):
         #self.enemies.append(Enemy1.Enemy1(150, 88, 0, 150))
         #self.enemies.append(Enemy2.Enemy2(150, 88, 0, 150))
         
-        # Add collision tiles
+        # 衝突タイルを追加
         self.collision_tiles = [(4, 10), (5, 10), (6, 10), (7, 10)]
 
     def draw(self):
         # pyxel.bltm(0, 0, 0, 0, 0, 160, 120, scale=2.0) # bltm does not support scale
-        # Manual scaled draw
+        # 手動スケーリング描画
         for ty in range(15): # 0 to 14
             for tx in range(20): # 0 to 19
                 tile = pyxel.tilemaps[0].pget(tx, ty)

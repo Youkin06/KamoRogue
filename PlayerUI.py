@@ -14,12 +14,12 @@ class PlayerUI:
         
     def HPdraw(self):
         for i in range(self.player.hp):
-            # 6 hearts per row
+            # 1行あたりハート6個
             row = i // 6
             col = i % 6
             
             x = (5 + col * 10) * 2 + 4
-            draw_y = 5 * 2 + 4 + row * 20 # Add vertical spacing
+            draw_y = 5 * 2 + 4 + row * 20 # 垂直方向の間隔を追加
             
             pyxel.blt(x, draw_y, 0, 0, 32, 8, 8, 0, scale=2.0)
 
@@ -39,23 +39,23 @@ class PlayerUI:
             if ability_name in ability_coords:
                 u, v = ability_coords[ability_name]
                 
-                # Multi-row logic: 7 items per row
+                # 複数行ロジック: 1行あたり7アイテム
                 row = i // 7
                 col = i % 7
                 
                 x = start_x - col * spacing
-                draw_y = y + row * 20 # Add vertical spacing for new rows
+                draw_y = y + row * 20 # 新しい行のための垂直間隔を追加
                 
                 pyxel.blt(x, draw_y, 0, u, v, 8, 8, 0, scale=2.0)
 
     def FloorDraw(self):
-        # Center of screen (320 width -> 160 center)
-        # Image width 16 (scaled by 2 -> 32)
+        # 画面中央 (幅320 -> 中央160)
+        # 画像幅 16 (2倍スケール -> 32)
         # x = 160 - 32/2 = 144
         x = 144
         y = 14 # Same as HP
         
-        # Calculate u based on stage_index
+        # stage_indexに基づいてuを計算
         # Stage 1: 64, Stage 2: 80 ...
         u = 64 + (self.player.stage_index - 1) * 16
         v = 0

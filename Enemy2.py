@@ -4,7 +4,7 @@ import EnemyBullet
 
 class Enemy2(Enemy.Enemy):
     def __init__(self, x, y, min_x=0, max_x=144):
-        super().__init__(x, y, 1)#初期位置x,y,HP
+        super().__init__(x, y, 12)#初期位置x,y,HP
         self.vx = 1
         self.min_x = min_x
         self.max_x = max_x
@@ -39,8 +39,8 @@ class Enemy2(Enemy.Enemy):
         self.shoot_timer += 1
         if self.shoot_timer >= self.shoot_interval:
             self.shoot_timer = 0
-            # Fire in direction of movement
-            # Bullet vx = self.vx * 2 (faster than enemy)
+            # 移動方向に発射
+            # 弾のvx = self.vx * 2 (敵より速い)
             b_vx = 2 if self.vx > 0 else -2
             self.bullets.append(EnemyBullet.EnemyBullet(self.x, self.y, b_vx, 0))
 
@@ -63,13 +63,13 @@ class Enemy2(Enemy.Enemy):
             
             if self.hit_timer > 0:
                 for i in range(1, 16):
-                    pyxel.pal(i, 7) # Change all non-transparent colors to white(7)
+                    pyxel.pal(i, 7) # 透明色以外を全て白(7)に変更
                 
-            # Changed source Y (v) to 128 as requested
+            # リクエスト通りソースY (v) を128に変更
             pyxel.blt(self.x * 2 + 8, self.y * 2 + 8, 0, u, 128, w, 16, 0, scale=2.0)
             
             if self.hit_timer > 0:
-                pyxel.pal() # Reset palette
+                pyxel.pal() # パレットをリセット
         elif self.deathEffectTime < 30:
              u = (self.deathEffectTime // 10) * 16 + 32
              pyxel.blt(self.x * 2 + 8, self.y * 2 + 8, 0, u, 128, 16, 16, 0, scale=2.0)

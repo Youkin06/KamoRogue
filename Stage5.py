@@ -8,29 +8,29 @@ import Toge
 class Stage5(Stage.Stage):
     def __init__(self):
         super().__init__()
-        # Use Stage4 settings or defaults as a base. User didn't specify content for Stage5.
-        # I'll make it simple for now.
+        # Stage4の設定またはデフォルトをベースに使用。ユーザーはStage5の内容を指定していない。
+        # とりあえずシンプルにする。
         
-        self.limit_x_min = 0 # Default
-        self.limit_x_max = 144 # Default
+        self.limit_x_min = 0 # デフォルト
+        self.limit_x_max = 144 # デフォルト
         
         self.player_start_x = 16
         self.player_start_y = 88
         
-        # Add some default collision tiles or just leave empty/minimal
-        self.collision_tiles = [] 
+        # デフォルトの衝突タイルを追加するか、空/最小限のままにする
+        self.collision_tiles = [(89 -80,8*8), (90 -80,8*8),(91 -80,8*8)] 
         
-        # Add a dummy enemy for now? Or leave empty? 
-        # Usually having 1 enemy is good for testing "clear" logic, 
-        # but user just asked to "create Stage5".
-        # I'll add one simple enemy.
+        # とりあえずダミーの敵を追加するか？それとも空のままにする？
+        # 通常、テストの「クリア」ロジックのために1体の敵がいると良いが、
+        # ユーザーは単に「Stage5を作成」とだけ言った。
+        # シンプルな敵を1体追加する。
         self.enemies.append(Enemy3.Enemy3(80, 88, 80, 120))
 
     def draw(self):
-        # reuse Stage1/Test draw logic (tilemap)
+        # Stage1/Testの描画ロジック（タイルマップ）を再利用
         for ty in range(15): 
             for tx in range(20): 
-                tile = pyxel.tilemaps[0].pget(tx + 80, ty) # Offset by +80
+                tile = pyxel.tilemaps[0].pget(tx + 80, ty) # +80のオフセット
                 src_x = tile[0] * 8
                 src_y = tile[1] * 8
                 pyxel.blt(tx * 16 + 4, ty * 16 + 4, 1, src_x, src_y, 8, 8, 0, scale=2.0)

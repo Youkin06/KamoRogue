@@ -47,60 +47,60 @@ class AbilitySelectScene:
     def draw(self):
         self.writer.draw(105, 40, "ABILITY SELECT", 16, 7)
         
-        # Define box positions based on number of options
+        # 選択肢の数に基づいてボックス位置を定義
         box_positions = []
         num_options = len(self.options)
         
         if num_options == 1:
-            box_positions = [(64, 30)] # Center
+            box_positions = [(64, 30)] # 中央
         elif num_options == 2:
-            box_positions = [(40, 30), (88, 30)] # Centered pair
+            box_positions = [(40, 30), (88, 30)] # 中央揃えペア
         else:
-            box_positions = [(16, 30), (64, 30), (112, 30)] # Standard 3
+            box_positions = [(16, 30), (64, 30), (112, 30)] # 標準3つ
         
-        # Draw boxes
+        # ボックス描画
         for i, pos in enumerate(box_positions):
-            # Scale coordinates by 2
+            # 座標を2倍にスケーリング
             x, y = pos
             draw_x = x * 2
             draw_y = y * 2
             
-            # Draw box (32x32 -> scaled 2.0 -> 64x64) offset +16
+            # ボックス描画 (32x32 -> スケール2.0 -> 64x64) オフセット +16
             pyxel.blt(draw_x + 16, draw_y + 16, 0, 0, 64, 32, 32, 0, scale=2.0)
             
-            # Draw highlight if selected
+            # 選択されている場合ハイライト描画
             if i == self.selected_index:
-                # Draw sprite highlight (32, 64) size 32x32 -> scaled 2.0 offset +16
+                # スプライトハイライト描画 (32, 64) サイズ 32x32 -> スケール2.0 オフセット +16
                 pyxel.blt(draw_x + 16, draw_y + 16, 0, 32, 64, 32, 32, 0, scale=2.0)
 
-            # Draw Ability Icon (if options exist)
+            # アビリティアイコン描画 (選択肢が存在する場合)
             if i < len(self.options):
                 ability = self.options[i]
-                # Center icon in box (offset 8 originally -> 16 scaled)
-                # Icon W=16 -> Offset +8
-                # Pos: draw_x + 16. With Offset: draw_x + 16 + 8 = draw_x + 24
+                # アイコンをボックスの中央に配置 (元オフセット8 -> スケール後16)
+                # アイコン W=16 -> オフセット +8
+                # 位置: draw_x + 16. オフセット込み: draw_x + 16 + 8 = draw_x + 24
                 pyxel.blt(draw_x + 24, draw_y + 24, 0, ability.u, ability.v, 16, 16, 0, scale=2.0)
                 
-                # Draw Ability Name (y=66 -> 132)
+                # アビリティ名描画 (y=66 -> 132)
                 name = ability.name
-                # Centering
+                # 中央揃え
                 name_width = self.get_text_width(name)
                 name_draw_x = draw_x + 32 - (name_width // 2)
                 self.writer.draw(name_draw_x, 132, name, 8, 7)
                 
-                # Draw Ability Description (y=74 -> 148)
+                # アビリティ説明描画 (y=74 -> 148)
                 desc = ability.description
                 for i, line in enumerate(desc.split('\n')):
                     line_width = self.get_text_width(line)
                     desc_draw_x = draw_x + 32 - (line_width // 2)
                     self.writer.draw(desc_draw_x, 148 + i * 10, line, 8, 7)
 
-        # Draw Controls (y=100 -> 200)
-        # Left Control W=16 -> Offset +8
+        # 操作説明描画 (y=100 -> 200)
+        # 左コントロール W=16 -> オフセット +8
         #pyxel.blt(80 + 8, 200 + 8, 0, 32, 96, 16, 16, 0, scale=2.0)
         #pyxel.blt(112 + 8, 200 + 8, 0, 0, 96, 16, 16, 0, scale=2.0)
         
-        # Right Control
+        # 右コントロール
         #pyxel.blt(176 + 8, 200 + 8, 0, 16, 96, 16, 16, 0, scale=2.0)
         #pyxel.blt(208 + 8, 200 + 8, 0, 32, 96, -16, 16, 0, scale=2.0)
 
