@@ -90,4 +90,9 @@ class HowToPlayScene:
         # Actually puf handles drawing. If we use size 8, width is roughly len*something.
         # Let's center manually or guess. 
         # "PRESS ENTER TO START" is ~20 chars. 20 * 8 = 160.
-        self.writer.draw(80, 210, msg, 8, 7)
+        #self.writer.draw(160, 210, msg, 8, 7)
+
+        #Enterキー
+        pyxel.blt(140 + 120, 200-8 -40, 0, 48, 96, 25, 13, 0, scale=2.0)
+        #CONFILM文字
+        pyxel.blt(140 + 120, 232-8 -40, 0, 23, 102, 18+6, 5, 0, scale=2.0)
