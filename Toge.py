@@ -50,19 +50,7 @@ class Toge(Enemy.Enemy):
         if self.hp > 0:
             pyxel.blt(self.x * 2, self.y * 2, 1, self.u, self.v, 8, 8, 0, scale=2.0)
             
-            # Debug: Draw Hitbox (Red)
-            hx = (self.x + self.hitbox_offset_x) * 2
-            hy = (self.y + self.hitbox_offset_y) * 2
-            hw = self.hitbox_width * 2
-            hh = self.hitbox_height * 2
-            pyxel.rectb(hx, hy, hw, hh, 8) # 8 = Red
-            
-            # Debug: Draw Detection Range (Yellow)
-            range_x = (self.x + 2 - 6) * 2 
-            range_y = (self.y + 8) * 2
-            range_w = (6 * 2) * 2
-            range_h = (self.detection_range_tile * 8) * 2
-            
-            pyxel.rectb(range_x, range_y, range_w, range_h, 10) # 10 = Yellow
+            # Debug lines removed
+            pass
         
         self.draw_effects()
