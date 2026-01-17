@@ -167,6 +167,7 @@ class Player:
         self.bullets = new_bullets
 
         if pyxel.btnp(pyxel.KEY_J):
+            pyxel.playm(1, loop=False)
             self.bullets.append(self.Bullet(self.x, self.y, self.facingLeft, self.attack_power))
 
     def guard(self):

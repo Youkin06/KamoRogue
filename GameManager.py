@@ -15,6 +15,7 @@ class GameManager:
     def __init__(self):
         pyxel.init(320, 240, fps=30)
         pyxel.load("my_resource.pyxres")
+        pyxel.playm(0, loop=True)
         
         self.player = Player.Player()
         self.stage = Stage1.Stage1()
