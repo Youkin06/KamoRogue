@@ -83,7 +83,8 @@ class Enemy3(Enemy.Enemy):
             if self.summon_timer <= 0:
                 self.is_summoning = False
                 # Spawn Toge
-                spawn_x = random.randint(8, 300)
+                spawn_x = random.randint(8, 150)
+                print("spawn_x: "+ str(spawn_x))
                 self.bullets.append(Toge.Toge(spawn_x, 16, detection_range_tile=30))
         else:
             self.toge_timer += 1

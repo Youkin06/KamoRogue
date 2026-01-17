@@ -51,7 +51,7 @@ class Toge(Enemy.Enemy):
         if self.hp > 0:
             pyxel.blt(self.x * 2, self.y * 2, 1, self.u, self.v, 8, 8, 0, scale=2.0)
             
-            # Debug lines removed
-            pass
+            # Debug lines
+            pyxel.rectb(self.x * 2 - 8, self.y * 2, 8 + 16, self.detection_range_tile * 16, 8)
         
         self.draw_effects()

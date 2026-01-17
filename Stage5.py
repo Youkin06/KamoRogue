@@ -24,7 +24,7 @@ class Stage5(Stage.Stage):
         # Usually having 1 enemy is good for testing "clear" logic, 
         # but user just asked to "create Stage5".
         # I'll add one simple enemy.
-        self.enemies.append(Enemy3.Enemy3(100, 88, 80, 120))
+        self.enemies.append(Enemy3.Enemy3(80, 88, 80, 120))
 
     def draw(self):
         # reuse Stage1/Test draw logic (tilemap)
