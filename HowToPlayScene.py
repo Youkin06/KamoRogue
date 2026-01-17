@@ -23,6 +23,15 @@ class HowToPlayScene:
     def draw(self):
         pyxel.cls(0)
         
+        # Draw Background (Tilemap 0, Start x=0, y=16)
+        base_ty = 16
+        for ty in range(15):
+            for tx in range(20):
+                tile = pyxel.tilemaps[0].pget(tx, base_ty + ty)
+                src_x = tile[0] * 8
+                src_y = tile[1] * 8
+                pyxel.blt(tx * 16, ty * 16, 1, src_x, src_y, 8, 8, 0, scale=2.0)
+        
         # --- Title ---
         title = "OPERATION"
         # Size 16 used in AbilitySelect for Title
@@ -93,6 +102,6 @@ class HowToPlayScene:
         #self.writer.draw(160, 210, msg, 8, 7)
 
         #Enterキー
-        pyxel.blt(140 + 120, 200-8 -40, 0, 48, 96, 25, 13, 0, scale=2.0)
+        pyxel.blt(140 + 120, 200-8 -20, 0, 48, 96, 25, 13, 0, scale=2.0)
         #CONFILM文字
-        pyxel.blt(140 + 120, 232-8 -40, 0, 23, 102, 18+6, 5, 0, scale=2.0)
+        pyxel.blt(140 + 120, 232-8 -20, 0, 23, 102, 18+6, 5, 0, scale=2.0)

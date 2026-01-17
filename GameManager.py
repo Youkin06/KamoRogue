@@ -88,10 +88,21 @@ class GameManager:
                 
                 self.player.vy = 0
 
+        
     def draw(self):
         pyxel.cls(0)
         
         if self.currentSceneState == 0:
+            # Draw Background (Tilemap 0, Start x=0, y=16)
+            # Screen 320x240 -> 20x15 tiles (16x16 pixels each)
+            base_ty = 16
+            for ty in range(15):
+                for tx in range(20):
+                    tile = pyxel.tilemaps[0].pget(tx, base_ty + ty)
+                    src_x = tile[0] * 8
+                    src_y = tile[1] * 8
+                    pyxel.blt(tx * 16, ty * 16, 1, src_x, src_y, 8, 8, 0, scale=2.0)
+
             pyxel.text(100, 100, "KAMO ROGUE", 7)
             pyxel.text(90, 140, "PRESS ENTER TO START", 7)
             
