@@ -72,11 +72,10 @@ class GameManager:
                 self.currentSceneState = 0
                 self.title_y = -64 # アニメーションをリセット
                 self.player = Player.Player()
-                self.currentSceneState = 0
-                self.player = Player.Player()
                 self.stage = Stage1.Stage1()
                 self.player.x = self.stage.player_start_x
                 self.player.y = self.stage.player_start_y 
+                pyxel.playm(0, loop=True) 
         elif self.currentSceneState == 3:
             if self.abilitySelectScene.update():
                 if self.player.stage_index == 1:
@@ -91,6 +90,7 @@ class GameManager:
                 elif self.player.stage_index == 4:
                      self.stage = Stage5.Stage5()
                      self.player.stage_index = 5
+                     pyxel.playm(2, loop=True)
                 
                 self.currentSceneState = 1
                 self.player.x = self.stage.player_start_x
