@@ -11,6 +11,7 @@ class Toge(Enemy.Enemy):
         self.v = 16
         # 下なんマスまでか
         self.detection_range_tile = detection_range_tile
+        self.is_active = True
         
         # Hitbox override
         self.hitbox_offset_x = -2

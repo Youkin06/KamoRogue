@@ -1,6 +1,7 @@
 import pyxel
 import Enemy
 import EnemyBullet
+import Toge
 import random
 
 class Enemy3(Enemy.Enemy):
@@ -15,8 +16,11 @@ class Enemy3(Enemy.Enemy):
         self.color = 8
         self.deathEffectTime = 0
         self.bullets = []
+        self.toge_timer = 0
+        self.is_summoning = False
+        self.summon_timer = 0
         self.shoot_timer = 0
-        self.shoot_interval = 30
+        self.shoot_interval = 15
         self.facingLeft = True
         self.jump_timer = 0
         self.on_ground = False
@@ -29,7 +33,8 @@ class Enemy3(Enemy.Enemy):
 
         self.update_movement(player)
         self.update_shooting(player)
-        self.update_bullets()
+        self.update_bullets(player)
+        self.TogeMake(player)
         super().update(player)
 
     def update_movement(self, player):
@@ -56,8 +61,8 @@ class Enemy3(Enemy.Enemy):
             self.on_ground = False
             
         # Jump randomly
-        if self.on_ground and random.randint(0, 100) < 2: # 2% chance per frame
-            self.vy = -6 # Jump strength
+        if self.on_ground and random.randint(0, 100) < 5: # 2% chance per frame
+            self.vy = -7 # Jump strength
             self.on_ground = False
 
     def update_shooting(self, player):
@@ -69,32 +74,67 @@ class Enemy3(Enemy.Enemy):
             b_vx = -2 if self.facingLeft else 2
             self.bullets.append(EnemyBullet.EnemyBullet(self.x, self.y, b_vx, 0, img_v=232))
 
-    def update_bullets(self):
+    def TogeMake(self, player):
+        if self.is_summoning:
+            self.summon_timer -= 1
+            if self.summon_timer <= 0:
+                self.is_summoning = False
+                # Spawn Toge
+                spawn_x = random.randint(8, 300)
+                self.bullets.append(Toge.Toge(spawn_x, 16, detection_range_tile=20))
+        else:
+            self.toge_timer += 1
+            if self.toge_timer > 120:
+                self.toge_timer = 0
+                self.is_summoning = True
+                self.summon_timer = 60 # Animation duration (adjust as needed, user didn't specify duration, default to 60 or 30?)
+                # User said "casting state". I'll use 60 frames for clear visibility.
+
+        # Old Toge Spawning removed
+        # self.toge_timer += 1 ...
+
+    def update_bullets(self, player):
         new_bullets = []
         for b in self.bullets:
-            b.update()
+            b.update(player)
             if b.is_active:
                 new_bullets.append(b)
         self.bullets = new_bullets
     
+    def TogeMakeDraw(self):
+        u = 32
+        if (pyxel.frame_count // 4) % 2 == 1:
+            u = 48
+        
+        w = 16
+        if self.facingLeft:
+            w = -16
+        else:
+            w = 16
+        
+        pyxel.blt(self.x * 2 + 8, self.y * 2 + 8, 0, u, 216, w, 16, 0, scale=2.0)
+
     def draw(self):
         if self.hp > 0:
-            u = (pyxel.frame_count // 6 % 2) * 16
-            w = 16
-            if self.facingLeft:
-                w = -16 # Flip to face Left
+            if self.is_summoning:
+                self.TogeMakeDraw()
             else:
-                w = 16 # Default face Right
-            
-            if self.hit_timer > 0:
-                for i in range(1, 16):
-                    pyxel.pal(i, 7)
+                u = (pyxel.frame_count // 6 % 2) * 16
+                w = 16
+                if self.facingLeft:
+                    w = -16 # Flip to face Left
+                else:
+                    w = 16 # Default face Right
                 
-            # Sprite at (0, 216)
-            pyxel.blt(self.x * 2 + 8, self.y * 2 + 8, 0, u, 216, w, 16, 0, scale=2.0)
-            
-            if self.hit_timer > 0:
-                pyxel.pal()
+                if self.hit_timer > 0:
+                    for i in range(1, 16):
+                        pyxel.pal(i, 7)
+                    
+                # Sprite at (0, 216)
+                pyxel.blt(self.x * 2 + 8, self.y * 2 + 8, 0, u, 216, w, 16, 0, scale=2.0)
+                
+                if self.hit_timer > 0:
+                    pyxel.pal()
         elif self.deathEffectTime < 30:
              u = (self.deathEffectTime // 10) * 16 + 32
              pyxel.blt(self.x * 2 + 8, self.y * 2 + 8, 0, u, 216, 16, 16, 0, scale=2.0)

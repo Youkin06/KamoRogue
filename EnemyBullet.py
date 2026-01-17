@@ -11,7 +11,7 @@ class EnemyBullet:
         self.is_active = True
         self.animation_frame = 0
 
-    def update(self):
+    def update(self, *args):
         self.x += self.vx
         self.y += self.vy
         self.life -= 1
