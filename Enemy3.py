@@ -1,0 +1,105 @@
+import pyxel
+import Enemy
+import EnemyBullet
+import random
+
+class Enemy3(Enemy.Enemy):
+    def __init__(self, x, y, min_x=0, max_x=144):
+        super().__init__(x, y, 10) # HP 10
+        self.vx = 0
+        self.vy = 0
+        self.gravity = 1
+        self.min_x = min_x
+        self.max_x = max_x
+        self.size = 4
+        self.color = 8
+        self.deathEffectTime = 0
+        self.bullets = []
+        self.shoot_timer = 0
+        self.shoot_interval = 30
+        self.facingLeft = True
+        self.jump_timer = 0
+        self.on_ground = False
+
+    def update(self, player):
+        if self.hp <= 0:
+            self.deathEffectTime += 1
+            self.update_effects()
+            return 
+
+        self.update_movement(player)
+        self.update_shooting(player)
+        self.update_bullets()
+        super().update(player)
+
+    def update_movement(self, player):
+        # Face Player
+        if player.x < self.x:
+            self.facingLeft = True
+        else:
+            self.facingLeft = False
+            
+        # Gravity
+        self.vy += self.gravity
+        self.y += self.vy
+        
+        # Ground Collision (Simple floor at 88 like others or generic?)
+        # Enemy1/2 don't have gravity, but Enemy3 needs it for jumping.
+        # Assuming floor is at y=88 for now as per Player.py logic, or just stay on platform?
+        # User didn't specify platform logic for enemies, but "jump" implies gravity.
+        # I'll implement simple floor collision at y=88 for now.
+        if self.y > 88:
+            self.y = 88
+            self.vy = 0
+            self.on_ground = True
+        else:
+            self.on_ground = False
+            
+        # Jump randomly
+        if self.on_ground and random.randint(0, 100) < 2: # 2% chance per frame
+            self.vy = -6 # Jump strength
+            self.on_ground = False
+
+    def update_shooting(self, player):
+        self.shoot_timer += 1
+        if self.shoot_timer >= self.shoot_interval:
+            self.shoot_timer = 0
+            # Fire towards player
+            # Simple horizontal aim: if facing left, shoot left.
+            b_vx = -2 if self.facingLeft else 2
+            self.bullets.append(EnemyBullet.EnemyBullet(self.x, self.y, b_vx, 0, img_v=232))
+
+    def update_bullets(self):
+        new_bullets = []
+        for b in self.bullets:
+            b.update()
+            if b.is_active:
+                new_bullets.append(b)
+        self.bullets = new_bullets
+    
+    def draw(self):
+        if self.hp > 0:
+            u = (pyxel.frame_count // 6 % 2) * 16
+            w = 16
+            if self.facingLeft:
+                w = -16 # Flip to face Left
+            else:
+                w = 16 # Default face Right
+            
+            if self.hit_timer > 0:
+                for i in range(1, 16):
+                    pyxel.pal(i, 7)
+                
+            # Sprite at (0, 216)
+            pyxel.blt(self.x * 2 + 8, self.y * 2 + 8, 0, u, 216, w, 16, 0, scale=2.0)
+            
+            if self.hit_timer > 0:
+                pyxel.pal()
+        elif self.deathEffectTime < 30:
+             u = (self.deathEffectTime // 10) * 16 + 32
+             pyxel.blt(self.x * 2 + 8, self.y * 2 + 8, 0, u, 216, 16, 16, 0, scale=2.0)
+        
+        for b in self.bullets:
+            b.draw()
+
+        self.draw_effects()

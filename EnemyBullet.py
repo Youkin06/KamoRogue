@@ -1,11 +1,12 @@
 import pyxel
 
 class EnemyBullet:
-    def __init__(self, x, y, vx, vy):
+    def __init__(self, x, y, vx, vy, img_v=144):
         self.x = x
         self.y = y
         self.vx = vx
         self.vy = vy
+        self.img_v = img_v
         self.life = 60 # Time to live in frames (optional cleanup)
         self.is_active = True
         self.animation_frame = 0
@@ -28,7 +29,7 @@ class EnemyBullet:
         # Cycle every few frames? User didn't specify speed. Standard 4-6 frames?
         cycle = (self.animation_frame // 4) % 3
         u = cycle * 8
-        v = 144
+        v = self.img_v
         
         w = 8
         if self.vx < 0:
