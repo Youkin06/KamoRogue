@@ -4,7 +4,9 @@ import Stage1
 import Stage2
 import Stage3
 import Stage4
+import Stage4
 import Stage5
+import HowToPlayScene
 import AbilitySelectScene
 import random
 import PlayerAbility
@@ -18,14 +20,19 @@ class GameManager:
         self.stage = Stage1.Stage1()
 
         self.abilitySelectScene = AbilitySelectScene.AbilitySelectScene()
-        self.currentSceneState = 0 # 0: Title, 1: Game, 2: Result, 3: AbilitySelect
+        self.howToPlayScene = HowToPlayScene.HowToPlayScene()
+        self.currentSceneState = 0 # 0: Title, 1: Game, 2: Result, 3: AbilitySelect, 4: HowToPlay
         
         pyxel.run(self.update, self.draw)
 
     def update(self):
         if self.currentSceneState == 0:
             if pyxel.btnp(pyxel.KEY_RETURN):
-                self.currentSceneState = 1
+                self.currentSceneState = 4 # Go to HowToPlay
+                
+        elif self.currentSceneState == 4:
+            if self.howToPlayScene.update():
+                self.currentSceneState = 1 # Go to Game
                 self.player.x = self.stage.player_start_x
                 self.player.y = self.stage.player_start_y
                 
@@ -97,3 +104,5 @@ class GameManager:
             pyxel.text(130, 120, "PRESS R TO RESTART", 7)
         elif self.currentSceneState == 3:
             self.abilitySelectScene.draw()
+        elif self.currentSceneState == 4:
+            self.howToPlayScene.draw()
