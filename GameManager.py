@@ -103,8 +103,17 @@ class GameManager:
                     src_y = tile[1] * 8
                     pyxel.blt(tx * 16, ty * 16, 1, src_x, src_y, 8, 8, 0, scale=2.0)
 
-            pyxel.text(100, 100, "KAMO ROGUE", 7)
-            pyxel.text(90, 140, "PRESS ENTER TO START", 7)
+                    pyxel.blt(tx * 16, ty * 16, 1, src_x, src_y, 8, 8, 0, scale=2.0)
+
+            # Title Image
+            # (0, 184) to (80, 215) -> w=81, h=32
+            # Screen Center (160, 120)
+            # Scaled 2.0 -> w=162, h=64
+            # x = 160 - 81 = 79
+            # y = 120 - 32 = 88
+            pyxel.blt(79+35, 88, 0, 0, 184, 81, 32, 0, scale=2.0)
+            
+            pyxel.text(90, 160, "PRESS ENTER TO START", 7)
             
         elif self.currentSceneState == 1:
             self.stage.draw()
