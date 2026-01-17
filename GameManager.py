@@ -114,7 +114,11 @@ class GameManager:
         
         # Only show text if animation finished (optional, but looks cleaner) or just always
         if self.title_y >= 88:
-            pyxel.text(90, 160, "PRESS ENTER TO START", 7)
+            #pyxel.text(90, 160, "PRESS ENTER TO START", 7)
+            #Enterキー
+            pyxel.blt(100+30+10 -20, 200-8 -20, 0, 48, 96, 25, 13, 0, scale=2.0)
+            #CONFILM文字
+            pyxel.text(160, 185, "TO START",7)
 
     def draw(self):
         pyxel.cls(0)
