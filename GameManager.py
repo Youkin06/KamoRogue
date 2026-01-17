@@ -21,13 +21,21 @@ class GameManager:
 
         self.abilitySelectScene = AbilitySelectScene.AbilitySelectScene()
         self.howToPlayScene = HowToPlayScene.HowToPlayScene()
+        self.abilitySelectScene = AbilitySelectScene.AbilitySelectScene()
+        self.howToPlayScene = HowToPlayScene.HowToPlayScene()
         self.currentSceneState = 0 # 0: Title, 1: Game, 2: Result, 3: AbilitySelect, 4: HowToPlay
+        
+        self.title_y = -64 # Start off-screen
         
         pyxel.run(self.update, self.draw)
 
     def update(self):
         if self.currentSceneState == 0:
+            if self.title_y < 88:
+                self.title_y += 4 # Animation speed
+            
             if pyxel.btnp(pyxel.KEY_RETURN):
+                self.title_y = 88 # Ensure finished if skipped? Or just proceed
                 self.currentSceneState = 4 # Go to HowToPlay
                 
         elif self.currentSceneState == 4:
@@ -61,6 +69,7 @@ class GameManager:
         elif self.currentSceneState == 2:
             if pyxel.btnp(pyxel.KEY_R):
                 self.currentSceneState = 0
+                self.title_y = -64 # Reset animation
                 self.player = Player.Player()
                 self.currentSceneState = 0
                 self.player = Player.Player()
@@ -89,31 +98,29 @@ class GameManager:
                 self.player.vy = 0
 
         
+    def TitleDraw(self):
+         # Draw Background (Tilemap 0, Start x=0, y=16)
+        base_ty = 16
+        for ty in range(15):
+            for tx in range(20):
+                tile = pyxel.tilemaps[0].pget(tx, base_ty + ty)
+                src_x = tile[0] * 8
+                src_y = tile[1] * 8
+                pyxel.blt(tx * 16, ty * 16, 1, src_x, src_y, 8, 8, 0, scale=2.0)
+
+        # Title Image
+        # x = 114 (79+35), y = self.title_y
+        pyxel.blt(114, self.title_y, 0, 0, 184, 81, 32, 0, scale=2.0)
+        
+        # Only show text if animation finished (optional, but looks cleaner) or just always
+        if self.title_y >= 88:
+            pyxel.text(90, 160, "PRESS ENTER TO START", 7)
+
     def draw(self):
         pyxel.cls(0)
         
         if self.currentSceneState == 0:
-            # Draw Background (Tilemap 0, Start x=0, y=16)
-            # Screen 320x240 -> 20x15 tiles (16x16 pixels each)
-            base_ty = 16
-            for ty in range(15):
-                for tx in range(20):
-                    tile = pyxel.tilemaps[0].pget(tx, base_ty + ty)
-                    src_x = tile[0] * 8
-                    src_y = tile[1] * 8
-                    pyxel.blt(tx * 16, ty * 16, 1, src_x, src_y, 8, 8, 0, scale=2.0)
-
-                    pyxel.blt(tx * 16, ty * 16, 1, src_x, src_y, 8, 8, 0, scale=2.0)
-
-            # Title Image
-            # (0, 184) to (80, 215) -> w=81, h=32
-            # Screen Center (160, 120)
-            # Scaled 2.0 -> w=162, h=64
-            # x = 160 - 81 = 79
-            # y = 120 - 32 = 88
-            pyxel.blt(79+35, 88, 0, 0, 184, 81, 32, 0, scale=2.0)
-            
-            pyxel.text(90, 160, "PRESS ENTER TO START", 7)
+            self.TitleDraw()
             
         elif self.currentSceneState == 1:
             self.stage.draw()
