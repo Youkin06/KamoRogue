@@ -66,6 +66,9 @@ class Enemy3(Enemy.Enemy):
             self.on_ground = False
 
     def update_shooting(self, player):
+        if self.is_summoning:
+            return
+            
         self.shoot_timer += 1
         if self.shoot_timer >= self.shoot_interval:
             self.shoot_timer = 0
@@ -81,7 +84,7 @@ class Enemy3(Enemy.Enemy):
                 self.is_summoning = False
                 # Spawn Toge
                 spawn_x = random.randint(8, 300)
-                self.bullets.append(Toge.Toge(spawn_x, 16, detection_range_tile=20))
+                self.bullets.append(Toge.Toge(spawn_x, 16, detection_range_tile=30))
         else:
             self.toge_timer += 1
             if self.toge_timer > 120:
