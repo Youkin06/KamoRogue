@@ -60,18 +60,18 @@ class GameManager:
 
                     pyxel.playm(0, loop=True) # 音楽を戻す等は任意
                 else:
-                self.currentSceneState = 3
-                # 利用可能な能力をフィルタリング
-                available_abilities = []
-                for ability in PlayerAbility.ability_list:
-                    if ability.repeatable or ability.id not in self.player.playerAbility.acquired_abilities:
-                        available_abilities.append(ability)
-                
-                # 最大3つの能力をサンプリング
-                sample_count = min(3, len(available_abilities))
-                selected_abilities = random.sample(available_abilities, sample_count)
-                
-                self.abilitySelectScene.set_options(selected_abilities, self.player)
+                    self.currentSceneState = 3
+                    # 利用可能な能力をフィルタリング
+                    available_abilities = []
+                    for ability in PlayerAbility.ability_list:
+                        if ability.repeatable or ability.id not in self.player.playerAbility.acquired_abilities:
+                            available_abilities.append(ability)
+                    
+                    # 最大3つの能力をサンプリング
+                    sample_count = min(3, len(available_abilities))
+                    selected_abilities = random.sample(available_abilities, sample_count)
+                    
+                    self.abilitySelectScene.set_options(selected_abilities, self.player)
                 
         elif self.currentSceneState == 2:
             if pyxel.btnp(pyxel.KEY_R):
@@ -103,9 +103,17 @@ class GameManager:
                 self.player.y = self.stage.player_start_y
                 
                 self.player.vy = 0
+        elif self.currentSceneState == 5:
+            if pyxel.btnp(pyxel.KEY_R):
+                self.currentSceneState = 0
+                self.title_y = -64
+                self.player = Player.Player()
+                self.stage = Stage1.Stage1()
+                self.player.x = self.stage.player_start_x
+                self.player.y = self.stage.player_start_y
+                pyxel.playm(0, loop=True)
 
-        
-    def TitleDraw(self):
+    def DrawBackground(self):
          # 背景を描画 (タイルマップ 0, 開始 x=0, y=16)
         base_ty = 16
         for ty in range(15):
@@ -114,6 +122,9 @@ class GameManager:
                 src_x = tile[0] * 8
                 src_y = tile[1] * 8
                 pyxel.blt(tx * 16, ty * 16, 1, src_x, src_y, 8, 8, 0, scale=2.0)
+
+    def TitleDraw(self):
+        self.DrawBackground()
 
         # Title Image
         # x = 114 (79+35), y = self.title_y
@@ -138,9 +149,14 @@ class GameManager:
             self.player.draw()
             
         elif self.currentSceneState == 2:
+            self.DrawBackground()
             pyxel.text(140, 100, "GAME OVER", 7)
             pyxel.text(130, 120, "PRESS R TO RESTART", 7)
         elif self.currentSceneState == 3:
             self.abilitySelectScene.draw()
         elif self.currentSceneState == 4:
             self.howToPlayScene.draw()
+        elif self.currentSceneState == 5:
+            self.DrawBackground()
+            pyxel.text(140, 100, "GAME CLEAR", 7)
+            pyxel.text(110, 120, "PRESS R TO RETURN TO TITLE", 7)
