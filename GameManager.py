@@ -53,7 +53,13 @@ class GameManager:
             if self.player.hp <= 0:
                 self.currentSceneState = 2
                 
+            #GameClear
             if len(self.stage.enemies) == 0:
+                if self.player.stage_index == 5:
+                    self.currentSceneState = 5 # Game Clear
+
+                    pyxel.playm(0, loop=True) # 音楽を戻す等は任意
+                else:
                 self.currentSceneState = 3
                 # 利用可能な能力をフィルタリング
                 available_abilities = []
