@@ -102,6 +102,6 @@ class HowToPlayScene:
         #self.writer.draw(160, 210, msg, 8, 7)
 
         #Enterキー
-        pyxel.blt(140 + 120, 200-8 -20, 0, 48, 96, 25, 13, 0, scale=2.0)
+        pyxel.blt(140 + 120, 200-8 -20 - 15, 0, 48, 96, 25, 13, 0, scale=2.0)
         #CONFILM文字
-        pyxel.blt(140 + 120, 232-8 -20, 0, 23, 102, 18+6, 5, 0, scale=2.0)
+        pyxel.blt(140 + 120, 232-8 -20 - 15, 0, 23, 102, 18+6, 5, 0, scale=2.0)
