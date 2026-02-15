@@ -6,6 +6,7 @@ import sys
 import random
 
 from .utils import *
+from .web_jp_glyphs import JP_GLYPHS
 
 FONTS_DIR = get_data_path()
 
@@ -21,10 +22,25 @@ class Writer:
         scale = max(1, int(font_size // 8))
         cursor_x = int(x)
         for char in text:
-            draw_char = char if ord(char) < 128 else "?"
-            for dy in range(scale):
-                pyxel.text(cursor_x, int(y) + dy, draw_char, font_color)
-            cursor_x += 4 * scale
+            if ord(char) < 128:
+                for dy in range(scale):
+                    pyxel.text(cursor_x, int(y) + dy, char, font_color)
+                cursor_x += 4 * scale
+                continue
+
+            glyph = JP_GLYPHS.get(char)
+            if glyph and font_size == 8:
+                rows = glyph["rows"]
+                for gy, row in enumerate(rows):
+                    yy = int(y) + gy
+                    for gx, bit in enumerate(row):
+                        if bit == "1":
+                            pyxel.pset(cursor_x + gx, yy, font_color)
+                cursor_x += glyph["w"]
+            else:
+                for dy in range(scale):
+                    pyxel.text(cursor_x, int(y) + dy, "?", font_color)
+                cursor_x += 4 * scale
         
     def draw(self, x, y, text, font_size=16, font_color=0, background_color=-1):
         if len(text) > 0:
