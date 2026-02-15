@@ -4,13 +4,22 @@
 
 ```bash
 ./.venv/bin/pyxel package . App.py
+./.venv/bin/pyxel app2html MyGame.pyxapp
 ```
 
 生成物:
 - `MyGame.pyxapp`
-- `index.html` (このリポジトリで作成済み)
+- `MyGame.html` (単一HTML。公開時の推奨)
+- `index.html` (ランチャー方式)
 
 ## 2. 配置
+
+### 推奨 (単一HTML)
+
+`MyGame.html` を GitHub Pages の `index.html` として配置してください。  
+（`MyGame.pyxapp` の配置ミスやキャッシュ問題を避けやすい）
+
+### ランチャー方式を使う場合
 
 同じディレクトリに以下を置いて公開してください。
 - `index.html`

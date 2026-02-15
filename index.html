@@ -73,6 +73,7 @@
   <script>
     const statusEl = document.getElementById("status");
     const errorEl = document.getElementById("error");
+    const APP_FILE = "MyGame.pyxapp?v=20260215a";
 
     function setStatus(text) {
       statusEl.textContent = text;
@@ -83,6 +84,16 @@
       errorEl.textContent = text;
     }
 
+    window.addEventListener("error", (ev) => {
+      setStatus("実行時エラーが発生しました。");
+      setError("runtime error: " + (ev.message || "unknown"));
+    });
+
+    window.addEventListener("unhandledrejection", (ev) => {
+      setStatus("非同期エラーが発生しました。");
+      setError("unhandled rejection: " + String(ev.reason || "unknown"));
+    });
+
     function loadScript(src) {
       return new Promise((resolve, reject) => {
         const s = document.createElement("script");
@@ -91,6 +102,13 @@
         s.onerror = () => reject(new Error("failed: " + src));
         document.head.appendChild(s);
       });
+    }
+
+    async function ensureGameFile(path) {
+      const res = await fetch(path, { method: "GET", cache: "no-store" });
+      if (!res.ok) {
+        throw new Error(path + " fetch failed: HTTP " + res.status);
+      }
     }
 
     (async () => {
@@ -103,9 +121,13 @@
           setStatus("CDN の pyxel.js を読み込みました。ゲームを起動します...");
         }
 
+        setStatus("ゲームデータを確認中...");
+        await ensureGameFile(APP_FILE);
+
+        setStatus("ゲームを起動します...");
         launchPyxel({
           command: "play",
-          name: "MyGame.pyxapp",
+          name: APP_FILE,
           gamepad: "enabled"
         });
       } catch (e) {

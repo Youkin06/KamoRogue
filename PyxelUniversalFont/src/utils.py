@@ -1,7 +1,15 @@
-from PIL import Image, ImageDraw, ImageFont
-import numpy as np
 import os
 import importlib.resources as pkg_resources
+
+PIL_AVAILABLE = True
+PIL_IMPORT_ERROR = None
+
+try:
+    from PIL import Image, ImageDraw, ImageFont
+    import numpy as np
+except Exception as exc:
+    PIL_AVAILABLE = False
+    PIL_IMPORT_ERROR = str(exc)
 
 def list_font_files(directory):
     result = []
@@ -20,7 +28,9 @@ def get_pixel_representation(
         background_color=7,
         show_image=False,
     ):
-    
+    if not PIL_AVAILABLE:
+        return None
+
     try:
         font = ImageFont.truetype(font_path, font_size)
     except OSError:
@@ -41,6 +51,9 @@ def get_pixel_representation(
         image.show()
     
     return pixels
+
+def get_pil_status():
+    return PIL_AVAILABLE, PIL_IMPORT_ERROR
 
 def get_data_path(dir="fonts"):
     if __package__:

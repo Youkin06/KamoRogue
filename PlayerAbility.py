@@ -1,6 +1,3 @@
-import PyxelUniversalFont
-import pyxel
-
 class Ability:
     def __init__(self, id, name, u, v, description, apply_func, repeatable=False):
         self.id = id
