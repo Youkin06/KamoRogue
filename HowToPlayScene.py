@@ -34,8 +34,8 @@ class HowToPlayScene:
         
         # --- タイトル ---
         title = "OPERATION"
-        # AbilitySelectのタイトルと同じサイズ16を使用
-        self.writer.draw(120, 20, title, 16, 7)
+        # Web版でも十分に大きく見えるサイズに調整
+        self.writer.draw(104, 16, title, 24, 7)
         
         # --- メイン画像 ---
         # Image0 (8, 152) - (63, 178) -> 56x27

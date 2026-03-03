@@ -7,6 +7,7 @@ import random
 
 from .utils import *
 from .web_jp_glyphs import JP_GLYPHS
+from .web_text_cache import TEXT_BITMAP_CACHE
 
 FONTS_DIR = get_data_path()
 
@@ -18,6 +19,18 @@ class Writer:
         self._warned = False
 
     def _draw_fallback(self, x, y, text, font_size, font_color):
+        bitmap = TEXT_BITMAP_CACHE.get((font_size, text))
+        if bitmap:
+            rows = bitmap["rows"]
+            base_x = int(x)
+            base_y = int(y)
+            for dy, row in enumerate(rows):
+                yy = base_y + dy
+                for dx, bit in enumerate(row):
+                    if bit == "1":
+                        pyxel.pset(base_x + dx, yy, font_color)
+            return
+
         # Pyxel Web cannot use Pillow/NumPy; degrade gracefully instead of crashing.
         scale = max(1, int(font_size // 8))
         cursor_x = int(x)

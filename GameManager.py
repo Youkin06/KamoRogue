@@ -170,7 +170,7 @@ class GameManager:
         elif self.currentSceneState == 2:
             self.DrawBackground()
             #pyxel.text(140, 100, "GAME OVER", 7)
-            self.writer.draw(110, 80, "GAME OVER", 24, 7) # Adjusted roughly to center
+            self.writer.draw(88, 72, "GAME OVER", 32, 7) # Adjusted roughly to center
             
             # Enter key image
             pyxel.blt(160-60, 120, 0, 48, 96, 25, 13, 0, scale=2.0)
@@ -183,7 +183,7 @@ class GameManager:
         elif self.currentSceneState == 5:
             self.DrawBackground()
             #pyxel.text(140, 100, "GAME CLEAR", 7)
-            self.writer.draw(100, 80, "GAME CLEAR", 24, 7)
+            self.writer.draw(70, 72, "GAME CLEAR", 32, 7)
             
             # Enter key image
             pyxel.blt(160 -60, 120, 0, 48, 96, 25, 13, 0, scale=2.0)
